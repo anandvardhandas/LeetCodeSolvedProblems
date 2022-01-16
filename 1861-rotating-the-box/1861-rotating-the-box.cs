@@ -23,8 +23,7 @@ public class Solution {
                     //do nothing
                 }
                 else{
-                    //swap with swap index
-                    char temp = result[swapIndex, col];
+                    //put stone at last empty index
                     result[swapIndex, col] = '#';
                     swapIndex--;
                 }
