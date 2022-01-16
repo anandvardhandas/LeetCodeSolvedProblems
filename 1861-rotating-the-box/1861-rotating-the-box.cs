@@ -20,7 +20,7 @@ public class Solution {
                     swapIndex = j-1;
                 }
                 else if(box[i][j] == '.'){
-                    result[row,col] = '.';
+                    //do nothing
                 }
                 else{
                     //swap with swap index
