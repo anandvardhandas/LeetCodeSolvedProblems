@@ -1,19 +1,17 @@
 public class Solution {
     public long MostPoints(int[][] questions) {
-       long[] dp = new long[questions.Length];
-       return Helper(questions, 0, dp);
+       int len = questions.Length;
+        long[] dp = new long[len+1];
+        
+        for(int i = len-1; i >= 0; i--){
+            long skip = dp[i+1];
+            long continuePart = questions[i][0];
+            if(i+questions[i][1]+1 < len)
+                continuePart += dp[i+questions[i][1]+1];
+            dp[i] = Math.Max(skip, continuePart);
+        }
+        
+       return dp[0];
     }
-    
-    private long Helper(int[][] questions, int index, long[] dp){
-        if(index >= questions.Length)
-            return 0;
-        
-        if(dp[index] > 0)
-            return dp[index];
-        
-        long maxPoints = Math.Max(questions[index][0] + Helper(questions, index+questions[index][1]+1, dp), Helper(questions, index+1, dp));
-        
-        dp[index] = maxPoints;
-        return dp[index];
-    }
+   
 }
