@@ -1,10 +1,9 @@
-public class Solution {
-    public int MaxDistToClosest(int[] seats) {
-        
+class Solution {
+    public int maxDistToClosest(int[] seats) {
         int max = 0;
         int leftPos = -1, rightPos = -1, currMax = 0;
         
-        for(int i = 0; i < seats.Length; i++){
+        for(int i = 0; i < seats.length; i++){
             if(seats[i] == 1){
                 leftPos = -1;
                 rightPos = -1;
@@ -20,7 +19,7 @@ public class Solution {
                 
                 currMax = rightPos-leftPos+1;
                 //updating max based on condition
-                if(leftPos == 0 || rightPos == seats.Length-1){
+                if(leftPos == 0 || rightPos == seats.length-1){
                     if(currMax > max)
                         max = currMax;
                 }
