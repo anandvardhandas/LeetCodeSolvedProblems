@@ -2,38 +2,36 @@ public class Solution {
     public int MaxDistToClosest(int[] seats) {
         
         int max = 0;
-        
-        int cl = -1, cr = -1, cmax = 0;
+        int leftPos = -1, rightPos = -1, currMax = 0;
         
         for(int i = 0; i < seats.Length; i++){
             if(seats[i] == 1){
-                cl = -1;
-                cr = -1;
+                leftPos = -1;
+                rightPos = -1;
             }
             else{
-                if(cl == -1){
-                    cl = i;
-                    cr = i;
+                if(leftPos == -1){
+                    leftPos = i;
+                    rightPos = i;
                 }
                 else{
-                    cr = i;
+                    rightPos = i;
                 }
                 
-                cmax = cr-cl+1;
+                currMax = rightPos-leftPos+1;
                 //updating max based on condition
-                if(cl == 0 || cr == seats.Length-1){
-                    if(cmax > max)
-                        max = cmax;
+                if(leftPos == 0 || rightPos == seats.Length-1){
+                    if(currMax > max)
+                        max = currMax;
                 }
                 else{
-                    int mid = cl + (cr-cl)/2;
-                    if(mid-cl+1 > max)
-                        max = mid-cl+1;
+                    int mid = leftPos + (rightPos-leftPos)/2;
+                    if(mid-leftPos+1 > max)
+                        max = mid-leftPos+1;
                 }
             }
         }
         
        return max;
-        
     }
 }
