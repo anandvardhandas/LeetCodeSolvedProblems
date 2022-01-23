@@ -24,7 +24,7 @@ public class Solution {
                     pq.Enqueue(currentNode);
                 }
                 else{
-                    if(!PriorityQueue.ComparedTo(currentNode, pq.Peek())){
+                    if(!ComparedTo(currentNode, pq.Peek())){
                         pq.Dequeue();
                         pq.Enqueue(currentNode);
                     }
@@ -40,6 +40,19 @@ public class Solution {
         }
         
         return result.Reverse().ToList();
+    }
+    
+    public static bool ComparedTo(Node node1, Node node2){
+        if(node1.dist > node2.dist)
+            return true;
+        else if(node1.dist == node2.dist && node1.price > node2.price)
+            return true;
+        else if(node1.dist == node2.dist && node1.price == node2.price && node1.row > node2.row)
+            return true;
+        else if(node1.dist == node2.dist && node1.price == node2.price && node1.row == node2.row && node1.col > node2.col)
+            return true;
+        else
+            return false;
     }
     
     private int[][] Directions = new int[4][] {
@@ -91,7 +104,7 @@ public class PriorityQueue
             nums[count] = node;
             count++;
             int i = count - 1;
-            while (i > 0 && ComparedTo(nums[i], nums[(i-1)/2]))
+            while (i > 0 && Solution.ComparedTo(nums[i], nums[(i-1)/2]))
             {
                 //Swap
                 Node temp = nums[i];
@@ -101,19 +114,6 @@ public class PriorityQueue
                 i = (i - 1) / 2;
             }
         }
-    }
-    
-    public static bool ComparedTo(Node node1, Node node2){
-        if(node1.dist > node2.dist)
-            return true;
-        else if(node1.dist == node2.dist && node1.price > node2.price)
-            return true;
-        else if(node1.dist == node2.dist && node1.price == node2.price && node1.row > node2.row)
-            return true;
-        else if(node1.dist == node2.dist && node1.price == node2.price && node1.row == node2.row && node1.col > node2.col)
-            return true;
-        else
-            return false;
     }
     
     public Node Dequeue()
@@ -128,12 +128,12 @@ public class PriorityQueue
             while (2 * i + 1 < count)
             {
                 int greater = 2 * i + 1;
-                if (2 * i + 2 < count && ComparedTo(nums[2 * i + 2], nums[greater]))
+                if (2 * i + 2 < count && Solution.ComparedTo(nums[2 * i + 2], nums[greater]))
                 {
                     greater = 2 * i + 2;
                 }
 
-                if (ComparedTo(nums[greater], nums[i]))
+                if (Solution.ComparedTo(nums[greater], nums[i]))
                 {
                     //swap
                     Node temp = nums[i];
