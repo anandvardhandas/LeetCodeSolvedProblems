@@ -1,19 +1,26 @@
 public class Solution {
     private int MOD = 1000000007;
     public int FindPaths(int m, int n, int maxMove, int startRow, int startColumn) {
-        Dictionary<string,int> dp = new Dictionary<string,int>();
+        int[,,] dp = new int[m,n,maxMove+1];
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                for(int k = 0; k <= maxMove; k++){
+                    dp[i,j,k] = -1;
+                }
+            }
+        }
         return Helper(m,n,startRow,startColumn,maxMove,dp);
     }
     
-    private int Helper(int m, int n, int row, int col, int moveLeft, Dictionary<string,int> dp){
+    private int Helper(int m, int n, int row, int col, int moveLeft, int[,,] dp){
         if(moveLeft < 0)
             return 0;
         
         if(row < 0 || row >= m || col < 0 || col >= n)
             return 1;
         
-        if(dp.ContainsKey($"{row}-{col}-{moveLeft}"))
-            return dp[$"{row}-{col}-{moveLeft}"];
+        if(dp[row,col,moveLeft] >= 0)
+            return dp[row,col,moveLeft];
         
         int result = 0;
         foreach(int[] dir in Directions){
@@ -22,7 +29,7 @@ public class Solution {
         }
         
         result = result%MOD;
-        dp.Add($"{row}-{col}-{moveLeft}", result);
+        dp[row,col,moveLeft] = result;
         return result;
     }
     
