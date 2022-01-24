@@ -3,15 +3,15 @@ public class Solution {
         int len = heights.Length;
         List<int> result = new List<int>();
         result.Add(len-1);
-        Stack<int> st = new Stack<int>();
-        st.Push(heights[len-1]);
+        int maxHeight = heights[len-1];
         for(int i = len-2; i >= 0; i--){
-            while(st.Count > 0 && heights[i] > st.Peek()){
-                st.Pop();
+            bool replaced = false;
+            if(heights[i] > maxHeight){
+                maxHeight = heights[i];
+                replaced = true;
             }
             
-            if(st.Count == 0){
-                st.Push(heights[i]);
+            if(replaced){
                 result.Add(i);
             }
         }
