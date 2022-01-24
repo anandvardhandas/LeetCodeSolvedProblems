@@ -8,22 +8,22 @@ class Solution {
         //As we are travelling in all directions, we cannot go with dynamic programming approach as we havent travveled all the cells for which the current cells is dependent to calculate result, 
         // Hence we are doing BFS approach
         Queue<int[]> que = new ArrayDeque<>();
-        que.add(new int[] { 0,0 });
-        grid[0][0] = 1;
+        que.add(new int[] { 0,0,1 });
+        int[][] visited = new int[n][n];
+        visited[0][0] = 1;
         
         while(!que.isEmpty()){
             int[] node = que.remove();
-            int row = node[0], col = node[1];
-            int dist =  grid[row][col];
+            int row = node[0], col = node[1], dist = node[2];
             
             if(row == n-1 && col == n-1)
                 return dist;
             
             for(int[] dir : Directions){
                 int nrow = dir[0]+row, ncol = dir[1]+col;
-                if(nrow >= 0 && nrow < n && ncol >= 0 && ncol < n && grid[nrow][ncol] == 0){
-                    que.add(new int[] { nrow, ncol });
-                    grid[nrow][ncol] = dist+1;
+                if(nrow >= 0 && nrow < n && ncol >= 0 && ncol < n && grid[nrow][ncol] == 0 && visited[nrow][ncol] == 0){
+                    visited[nrow][ncol] = 1;
+                    que.add(new int[] { nrow, ncol, dist+1 });
                 }
                     
             }
