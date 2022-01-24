@@ -12,36 +12,47 @@
  * }
  */
 public class CBTInserter {
+    Queue<TreeNode> que;
     private TreeNode root;
-    
+    private TreeNode curr;
     public CBTInserter(TreeNode root) {
         this.root = root;
-    }
-    
-    public int Insert(int val) {
-        Queue<TreeNode> que = new Queue<TreeNode>();
-        TreeNode curr = root;
+        this.curr = root;
+        
+        que = new Queue<TreeNode>();
         que.Enqueue(curr);
+        
         while(que.Count > 0){
             curr = que.Dequeue();
             if(curr.left != null)
                 que.Enqueue(curr.left);
             else{
-                TreeNode newNode = new TreeNode(val);
-                curr.left = newNode;
-                return curr.val;
+                break;
             }
             
             if(curr.right != null)
                 que.Enqueue(curr.right);
             else{
-                TreeNode newNode = new TreeNode(val);
-                curr.right = newNode;
-                return curr.val;
+                break;
             }
         }
+    }
+    
+    public int Insert(int val) {
+        int result = -1;
+       if(curr.left == null){
+           curr.left = new TreeNode(val);
+           que.Enqueue(curr.left);
+           result = curr.val;
+       }
+       else if(curr.right == null){
+           curr.right = new TreeNode(val);
+           que.Enqueue(curr.right);
+           result = curr.val;
+           curr = que.Dequeue();
+       }
         
-        return -1;
+        return result;
     }
     
     public TreeNode Get_root() {
