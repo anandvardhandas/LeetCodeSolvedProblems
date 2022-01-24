@@ -1,5 +1,6 @@
 public class Solution {
     public int[] FindBuildings(int[] heights) {
+        //without using any space
         int len = heights.Length;
         List<int> result = new List<int>();
         result.Add(len-1);
