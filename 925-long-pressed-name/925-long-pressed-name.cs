@@ -17,6 +17,7 @@ public class Solution {
                 j++;
             }
             
+            //comparing the length
             if(i-left > j-right)
                 return false;
         }
