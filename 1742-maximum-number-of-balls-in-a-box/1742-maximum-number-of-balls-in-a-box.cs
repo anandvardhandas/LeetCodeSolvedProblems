@@ -1,6 +1,6 @@
 public class Solution {
     public int CountBalls(int lowLimit, int highLimit) {
-        Dictionary<int,int> map = new Dictionary<int,int>();
+        int[] map = new int[46];
         int num = lowLimit;
         int result = -1;
         while(num <= highLimit){
@@ -12,13 +12,8 @@ public class Solution {
                 n /= 10;
             }
             
-            if(!map.ContainsKey(sum))
-                map.Add(sum, 1);
-            else
-                map[sum]++;
-            
+            map[sum]++;
             result = Math.Max(result, map[sum]);
-            
             num++;
         }
         
