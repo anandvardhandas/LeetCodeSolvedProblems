@@ -36,22 +36,10 @@ public class Solution {
             st.Push(i);
         }
         
-        foreach(var item in left){
-            Console.WriteLine(item);
-        }
-        
-        Console.WriteLine("------");
-        
-        foreach(var item in right){
-            Console.WriteLine(item);
-        }
-        
         int maxArea = 0;
-        Console.WriteLine("------");
         for(int i = 0; i < len; i++){
             int width = (i-left[i]) + (right[i]-i) - 1;
             int currArea = width * heights[i];
-            Console.WriteLine(currArea);
             maxArea = Math.Max(maxArea, currArea);
         }
         
