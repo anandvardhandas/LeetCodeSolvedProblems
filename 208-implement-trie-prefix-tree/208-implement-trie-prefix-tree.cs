@@ -1,77 +1,83 @@
 public class Trie {
-    private Node root;
     
+    public Node root;
     public Trie() {
         root = new Node();
     }
     
     public void Insert(string word) {
         Node curr = root;
-        
         foreach(char c in word){
-            if(curr.ContainsKey(c)){
-                curr = curr.GetKey(c);
+            Node item = curr.GetCharNode(c);
+            if(item == null){
+                curr = curr.SetCharNode(c);
             }
             else{
-                curr = curr.SetKey(c);
+                curr = item;
             }
         }
         
-        curr.SetFlag();
+        curr.SetFlag(true);
     }
     
     public bool Search(string word) {
         Node curr = root;
         foreach(char c in word){
-            if(curr.ContainsKey(c)){
-                curr = curr.GetKey(c);
+            Node item = curr.GetCharNode(c);
+            if(item == null){
+                return false;
             }
             else{
-                return false;
+                curr = item;
             }
         }
         
-        return curr.GetFlag() == true;
+        if(curr.Getflag())
+            return true;
+        
+        return false;
     }
     
     public bool StartsWith(string prefix) {
         Node curr = root;
         foreach(char c in prefix){
-            if(curr.ContainsKey(c)){
-                curr = curr.GetKey(c);
+            Node item = curr.GetCharNode(c);
+            if(item == null){
+                return false;
             }
             else{
-                return false;
+                curr = item;
             }
         }
         
-        return curr != null;
+        return true;
     }
 }
 
 public class Node{
-    Node[] nodes = new Node[26];
-    bool flag = false;
     
-    public bool ContainsKey(char c){
-        return nodes[c-97] != null;
+    public Node[] map;
+    public bool EndFlag;
+    
+    public Node(){
+        map = new Node[26];
     }
     
-    public Node SetKey(char c){
-        nodes[c-97] = new Node();
-        return nodes[c-97];
+    public void SetFlag(bool value){
+        this.EndFlag = value;
     }
     
-    public Node GetKey(char c){
-        return nodes[c-97];
+    public bool Getflag(){
+        return this.EndFlag;
     }
     
-    public void SetFlag(){
-        flag = true;
+    public Node GetCharNode(char c){
+        return this.map[c-97];
     }
     
-    public bool GetFlag(){
-        return flag;
+    public Node SetCharNode(char c){
+        this.map[c-97] = new Node();
+        return this.map[c-97];
     }
 }
 
