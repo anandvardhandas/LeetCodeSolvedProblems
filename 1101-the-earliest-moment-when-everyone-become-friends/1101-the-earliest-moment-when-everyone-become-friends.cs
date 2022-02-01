@@ -48,10 +48,10 @@ public class DisJointSet{
     }
     
     public void Union(int data1, int data2){
-        Node node1 = map[data1];
-        Node node2 = map[data2];
-        Node parent1 = FindSet(node1);
-        Node parent2 = FindSet(node2);
+        Node node1 = FindSet(data1);
+        Node node2 = FindSet(data2);
+        Node parent1 = node1.parent;
+        Node parent2 = node2.parent;
         if(parent1 == parent2)
             return;
         
