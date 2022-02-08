@@ -1,10 +1,10 @@
 class LRUCache {
-    public HashMap<Integer,Node> map;
+    public ConcurrentHashMap<Integer,Node> map;
     public int cap;
     public int size;
     public DList list;
     public LRUCache(int capacity) {
-        map = new HashMap<>();
+        map = new ConcurrentHashMap<>();
         cap = capacity;
         size = 0;
         list = new DList();
