@@ -24,7 +24,7 @@ class Solution {
         int l = i;
         int nextHighest = l++;
         while(l < len){
-            if(nums[l] > nums[i-1] && nums[l] < nums[nextHighest])
+            if(nums[l] > nums[i-1] && nums[l] <= nums[nextHighest])
                 nextHighest = l;
             
             l++;
@@ -32,33 +32,17 @@ class Solution {
         
         Swap(nums, i-1, nextHighest);
         
-        //Sort the remaining part from ith to last
-        Sort(nums, i, len-1);
+        //As numbers are already sorted on right side, we just need to reverse from ith position to len-1
+        Reverse(nums, i, len-1);
         
     }
     
-    private void Sort(int[] nums, int low, int hi){
-        if(low < hi){
-            int pindex = Partition(nums, low, hi);
-            Sort(nums, low, pindex-1);
-            Sort(nums, pindex+1, hi);
+    private void Reverse(int[] nums, int low, int hi){
+        while(low < hi){
+            Swap(nums, low, hi);
+            low++;
+            hi--;
         }
-    }
-    
-    private int Partition(int[] nums, int low, int hi){
-        int pindex = low;
-        int pivot = nums[hi];
-        for(int i = low; i < hi; i++){
-            if(nums[i] <= pivot){
-                //swap
-                Swap(nums, i, pindex);
-                pindex++;
-            }
-        }
-        
-        //swap
-        Swap(nums, pindex, hi);
-        return pindex;
     }
     
     private void Swap(int[] nums, int i, int j){
