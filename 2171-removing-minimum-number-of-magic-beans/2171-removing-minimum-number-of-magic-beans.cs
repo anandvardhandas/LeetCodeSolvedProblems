@@ -18,7 +18,7 @@ public class Solution {
             if(i > 0)
                 prefixval = prefix[i-1];
             
-            beanstoremovetomakeequal = (prefix[len-1] - prefixval) - ((len-i)*(long)beans[i]);
+            beanstoremovetomakeequal = (prefix[len-1] - prefixval) - ((len-i)* 1L * beans[i]);
             
             result = Math.Min(result, beanstoremovetomakeequal+prefixval);
         }
