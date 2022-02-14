@@ -1,36 +1,42 @@
 public class SnapshotArray {
 
-    Dictionary<int,Dictionary<int,int>> snapshot;
-    Dictionary<int,int> arr;
+    Dictionary<int,int>[] snapshot;
     int snapshotid;
     
     public SnapshotArray(int length) {
-        arr = new Dictionary<int,int>();
-        snapshot = new Dictionary<int,Dictionary<int,int>>();
+        snapshot = new Dictionary<int,int>[length];
+        for(int i = 0; i < length; i++){
+            snapshot[i] = new Dictionary<int,int>();
+            snapshot[i].Add(0,0);
+        }
+        
         snapshotid = 0;
     }
     
     public void Set(int index, int val) {
-        if(arr.ContainsKey(index)){
-            arr[index] = val;
+        if(!snapshot[index].ContainsKey(snapshotid)){
+            snapshot[index].Add(snapshotid, val);
         }
         else{
-            arr.Add(index,val);
+            snapshot[index][snapshotid] = val;
         }
     }
     
     public int Snap() {
-        snapshot.Add(snapshotid, new Dictionary<int,int>(arr));
-        int prevsnapshotid = snapshotid;
-        snapshotid++;
-        return prevsnapshotid;
+        return snapshotid++;
     }
     
     public int Get(int index, int snap_id) {
-        if(snapshot[snap_id].ContainsKey(index)){
-            return snapshot[snap_id][index];
-        }
-        return 0;
+       if(!snapshot[index].ContainsKey(snap_id)){
+           List<int> sortedSnapShotIds = snapshot[index].Keys.ToList();
+           snap_id = sortedSnapShotIds.BinarySearch(snap_id);
+           if(snap_id < 0){
+               snap_id = ~snap_id;
+               snap_id = sortedSnapShotIds[snap_id-1];
+           }
+       }
+        
+        return snapshot[index][snap_id];
     }
 }
 
