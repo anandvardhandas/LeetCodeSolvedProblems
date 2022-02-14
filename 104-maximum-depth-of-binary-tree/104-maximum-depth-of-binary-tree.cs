@@ -16,10 +16,23 @@ public class Solution {
         if(root == null)
             return 0;
         
-        int lheight = 1 + MaxDepth(root.left);
-        int rheight = 1 + MaxDepth(root.right);
+        Queue<TreeNode> que = new Queue<TreeNode>();
+        que.Enqueue(root);
+        int height = 0;
         
-        int maxHeight = Math.Max(lheight, rheight);
-        return maxHeight;
+        while(que.Count > 0){
+            int size = que.Count;
+            for(int i = 0; i < size; i++){
+                TreeNode node = que.Dequeue();
+                if(node.left != null)
+                    que.Enqueue(node.left);
+                if(node.right != null)
+                    que.Enqueue(node.right);
+            }
+            
+            height++;
+        }
+        
+        return height;
     }
 }
