@@ -15,21 +15,21 @@ public class Solution {
             return head;
         
         ListNode dummy = new ListNode(0);
+        ListNode curr = dummy;
         dummy.next = head;
         
-        ListNode prev = dummy;
-        ListNode curr = head;
         
-        while(curr != null && curr.next != null){
-            ListNode first = curr;
-            ListNode second = curr.next;
+        while(curr.next != null && curr.next.next != null){
+            ListNode first = curr.next;
+            ListNode second = curr.next.next;
             
             first.next = second.next;
-            second.next = first;
-            prev.next = second;
             
-            prev = first;
-            curr = first.next;
+            curr.next = second;
+            curr.next.next = first;
+            
+            curr = curr.next.next;
+            
         }
         
         return dummy.next;
