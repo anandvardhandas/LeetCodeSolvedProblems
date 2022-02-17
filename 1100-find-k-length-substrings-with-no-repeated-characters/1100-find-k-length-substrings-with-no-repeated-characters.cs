@@ -1,7 +1,7 @@
 public class Solution {
     public int NumKLenSubstrNoRepeats(string s, int k) {
         int len = s.Length;
-        if(k > len)
+        if(k > len || k > 26)
             return 0;
         
         int result = 0;
