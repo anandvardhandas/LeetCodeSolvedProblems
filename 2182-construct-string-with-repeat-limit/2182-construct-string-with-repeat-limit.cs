@@ -13,21 +13,21 @@ public class Solution {
             int charcount = map[i];
             int index = 0;
             while(index < len && charcount > 0){
-                int count = 0;
-                while(index < len && count < repeatLimit && charcount > 0){
+                int repeatCount = 0;
+                while(index < len && repeatCount < repeatLimit && charcount > 0){
                     if(index < len && arr[index] == 0){
                         arr[index] = (char)(i+97);
 
-                        count++;
+                        repeatCount++;
                         charcount--;
                     }
                     else
-                        count = 0;
+                        repeatCount = 0;
 
                     index++;
                 }
                 
-                if(count == repeatLimit){
+                if(repeatCount == repeatLimit){
                     index++;
                 }
             }
