@@ -1,8 +1,8 @@
 public class Solution {
-    public int[] map = new int[1001];
     public int[] prefix = new int[1001];
     public Solution(){
         for(int i = 1; i <= 1000; i++){
+            bool isEven = false;
             int num = i;
             int sum = 0;
             while(num > 0){
@@ -11,10 +11,10 @@ public class Solution {
             }
             
             if(sum%2 == 0){
-                map[i] = 1;
+                isEven = true;
             }
             
-            prefix[i] = prefix[i-1] + (map[i] == 1 ? 1 : 0);
+            prefix[i] = prefix[i-1] + (isEven ? 1 : 0);
         }
         
         
