@@ -1,20 +1,17 @@
 public class Solution {
     public int RemoveCoveredIntervals(int[][] intervals) {
         Array.Sort(intervals, new MyComparer());
-        //foreach(var item in intervals){
-            //Console.WriteLine($"{item[0]} and {item[1]}");
-        //}
         
-        int l = intervals[0][0], r = intervals[0][1];
+        int left = intervals[0][0], right = intervals[0][1];
         int removed = 0;
         for(int i = 1; i < intervals.Length; i++){
-            if(intervals[i][0] >= l && intervals[i][1] <= r){
+            if(intervals[i][0] >= left && intervals[i][1] <= right){
                 removed++;
             }
             else{
-                if(intervals[i][1] > r){
-                    l = intervals[i][0];
-                    r = intervals[i][1];
+                if(intervals[i][1] > right){
+                    left = intervals[i][0];
+                    right = intervals[i][1];
                 }
             }
         }
