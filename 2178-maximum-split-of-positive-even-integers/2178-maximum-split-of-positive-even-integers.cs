@@ -17,11 +17,8 @@ public class Solution {
             return result;
         
         long lastval = result[result.Count-1];
-        //Console.WriteLine(lastval);
         result.RemoveAt(result.Count-1);
-        //Console.WriteLine(currsum);
         currsum += lastval;
-        //Console.WriteLine(currsum);
         result.Add(currsum);
         return result;
     }
