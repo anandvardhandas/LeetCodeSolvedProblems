@@ -1,7 +1,5 @@
 public class Solution {
     public string RepeatLimitedString(string s, int repeatLimit) {
-        int rl = repeatLimit;
-        
         int len = s.Length;
         
         int[] map = new int[26];
@@ -16,7 +14,7 @@ public class Solution {
             int index = 0;
             while(index < len && charcount > 0){
                 int count = 0;
-                while(index < len && count < rl && charcount > 0){
+                while(index < len && count < repeatLimit && charcount > 0){
                     if(index < len && arr[index] == 0){
                         arr[index] = (char)(i+97);
 
@@ -29,7 +27,7 @@ public class Solution {
                     index++;
                 }
                 
-                if(count == rl){
+                if(count == repeatLimit){
                     index++;
                 }
             }
