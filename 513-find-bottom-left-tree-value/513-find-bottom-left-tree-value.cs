@@ -16,26 +16,17 @@ public class Solution {
         Queue<TreeNode> que = new Queue<TreeNode>();
         que.Enqueue(root);
         
-        int result = 0;
-        
         while(que.Count > 0){
-            int size = que.Count;
-            for(int i = 1; i <= size; i++){
-                TreeNode node = que.Dequeue();
-                if(i == 1){
-                    result = node.val;
-                }
-                
-                if(node.left != null){
-                    que.Enqueue(node.left);
-                }
-                
-                if(node.right != null){
-                    que.Enqueue(node.right);
-                }
+            root = que.Dequeue();
+            
+            if(root.right != null){
+                que.Enqueue(root.right);
+            }
+            if(root.left != null){
+                que.Enqueue(root.left);
             }
         }
         
-        return result;
+        return root.val;
     }
 }
