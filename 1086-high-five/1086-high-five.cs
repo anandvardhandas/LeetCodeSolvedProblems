@@ -5,7 +5,7 @@ public class Solution {
         for(int i = 0; i < items.Length; i++){
             int key = items[i][0];
             if(!map.ContainsKey(key)){
-                PriorityQueue<int,int> pq = new PriorityQueue<int,int>(Comparer<int>.Create((x,y) => x.CompareTo(y)));
+                PriorityQueue<int,int> pq = new PriorityQueue<int,int>(5, Comparer<int>.Create((x,y) => x.CompareTo(y)));
                 
                 int val = items[i][1];
                 pq.Enqueue(val,val);
@@ -16,12 +16,17 @@ public class Solution {
                 var pq = map[key];
                 int val = items[i][1];
                 
-                pq.Enqueue(val, val);
-                if(pq.Count > 5){
-                    pq.Dequeue();
+                if(pq.Count == 5){
+                    if(val > pq.Peek()){
+                        pq.Dequeue();
+                        pq.Enqueue(val,val);
+                        map[key] = pq;
+                    }
                 }
-                
-                map[key] = pq;
+                else{
+                    pq.Enqueue(val, val);
+                    map[key] = pq;
+                }
             }
         }
         
