@@ -31,11 +31,12 @@ public class Solution {
             return dp[index];
         }
         
-        //take the current value and skip next or go to next value
+        //take the current value and take next value or skip based on condition that next value is +1 than current value
         int res1 = 0, res2 = 0;
         if(index < map.Count-1 && arr[index] != arr[index+1]-1){
             res1 = map[arr[index]] + Helper(map, arr, index+1, dp);
         }
+        //skip the current value and take the next value
         else{
             res1 = map[arr[index]] + Helper(map, arr, index+2, dp);
         }
