@@ -1,6 +1,6 @@
 public class Solution {
     public int[][] HighFive(int[][] items) {
-        SortedDictionary<int,PriorityQueue<int,int>> map = new SortedDictionary<int,PriorityQueue<int,int>>();
+        SortedDictionary<int,(int,PriorityQueue<int,int>)> map = new SortedDictionary<int,(int,PriorityQueue<int,int>)>();
         
         for(int i = 0; i < items.Length; i++){
             int key = items[i][0];
@@ -10,22 +10,26 @@ public class Solution {
                 int val = items[i][1];
                 pq.Enqueue(val,val);
                 
-                map.Add(items[i][0], pq);
+                map.Add(items[i][0], (val,pq));
             }
             else{
-                var pq = map[key];
+                int sum = map[key].Item1;
+                var pq = map[key].Item2;
+                
                 int val = items[i][1];
                 
                 if(pq.Count == 5){
                     if(val > pq.Peek()){
-                        pq.Dequeue();
+                        sum = sum - pq.Dequeue();
+                        sum += val;
                         pq.Enqueue(val,val);
-                        map[key] = pq;
+                        map[key] = (sum, pq);
                     }
                 }
                 else{
+                    sum += val;
                     pq.Enqueue(val, val);
-                    map[key] = pq;
+                    map[key] = (sum, pq);
                 }
             }
         }
@@ -33,13 +37,7 @@ public class Solution {
         int[][] result = new int[map.Count][];
         int index = 0;
         foreach(var item in map){
-            int sum = 0;
-            var pq = item.Value;
-            while(pq.Count > 0){
-                sum += pq.Dequeue();
-            }
-            
-            result[index++] = new int[] { item.Key, sum/5 };
+            result[index++] = new int[] { item.Key, item.Value.Item1/5 };
         }
         
         return result;
