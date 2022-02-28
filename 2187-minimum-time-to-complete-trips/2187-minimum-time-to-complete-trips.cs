@@ -4,8 +4,6 @@ public class Solution {
         
         long lt = 1;
         long rt = 100000000000000;
-        //Console.WriteLine(l);
-        //Console.WriteLine(r);
         while(lt < rt){
             long mt = (lt + (rt-lt)/2);
             long midtrips = GetTrips(time, mt);
