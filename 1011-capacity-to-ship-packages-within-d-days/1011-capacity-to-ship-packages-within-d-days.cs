@@ -12,14 +12,10 @@ public class Solution {
         
         int low = max;
         int hi = total;
-        //Console.WriteLine(low);
-        //Console.WriteLine(hi);
         
         while(low < hi){
             int midcap = low + (hi-low)/2;
-            //Console.WriteLine(midcap);
             int daystocomp = GetDays(weights, midcap);
-            //Console.WriteLine(daystocomp);
 
             if(daystocomp > days){
                 low = midcap+1;
