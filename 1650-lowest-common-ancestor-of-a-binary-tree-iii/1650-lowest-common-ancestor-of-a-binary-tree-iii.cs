@@ -10,32 +10,34 @@ public class Node {
 
 public class Solution {
     public Node LowestCommonAncestor(Node p, Node q) {
-        List<Node> plist = new List<Node>();
-        List<Node> qlist = new List<Node>();
+        int pdepth = GetDepth(p);
+        int qdepth = GetDepth(q);
         
-        Node currp = p;
-        plist.Add(currp);
-        while(currp.parent != null){
-            plist.Add(currp.parent);
-            currp = currp.parent;
+        while(pdepth > qdepth){
+            p = p.parent;
+            pdepth--;
         }
         
-        Node currq = q;
-        qlist.Add(currq);
-        while(currq.parent != null){
-            qlist.Add(currq.parent);
-            currq = currq.parent;
+        while(qdepth > pdepth){
+            q = q.parent;
+            qdepth--;
         }
         
-        int i = plist.Count-1, j = qlist.Count-1;
-        
-        Node lca = plist[i];
-        while(i >= 0 && j >= 0 && plist[i] == qlist[j]){
-            lca = plist[i];
-            i--;
-            j--;
+        while(p != q){
+            p = p.parent;
+            q = q.parent;
         }
         
-        return lca;
+        return p;
+    }
+    
+    private int GetDepth(Node n){
+        int depth = 0;
+        while(n != null){
+            n = n.parent;
+            depth++;
+        }
+        
+        return depth;
     }
 }
