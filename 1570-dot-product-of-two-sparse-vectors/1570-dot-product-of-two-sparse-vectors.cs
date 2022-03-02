@@ -1,11 +1,10 @@
 public class SparseVector {
-    Dictionary<int,int> map = new Dictionary<int,int>();
-    public int[] _nums;
+    //using list to store non zero index and their values for both the arrays
+    List<int[]> map = new List<int[]>();
     public SparseVector(int[] nums) {
-        //Console.WriteLine(map.Count);
         for(int i = 0; i < nums.Length; i++){
             if(nums[i] != 0){
-                map.Add(i,nums[i]);
+                map.Add(new int[] { i,nums[i] });
             }
         }
     }
@@ -13,9 +12,18 @@ public class SparseVector {
     // Return the dotProduct of two sparse vectors
     public int DotProduct(SparseVector vec) {
         int result = 0;
-        foreach(var item in this.map){
-            if(vec.map.ContainsKey(item.Key)){
-                result += item.Value * vec.map[item.Key];
+        int i = 0, j = 0;
+        while(i < this.map.Count && j < vec.map.Count){
+            if(this.map[i][0] == vec.map[j][0]){
+                result += this.map[i][1] * vec.map[j][1];
+                i++;
+                j++;
+            }
+            else if(this.map[i][0] > vec.map[j][0]){
+                j++;
+            }
+            else if(this.map[i][0] < vec.map[j][0]){
+                i++;
             }
         }
         
