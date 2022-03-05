@@ -1,12 +1,13 @@
 public class Solution {
     public int DeleteAndEarn(int[] nums) {
+        int len = nums.Length;
         SortedDictionary<int,int> map = new SortedDictionary<int,int>();
-        foreach(int num in nums){
-            if(!map.ContainsKey(num)){
-                map.Add(num,num);
+        for(int i = 0; i < len; i++){
+            if(!map.ContainsKey(nums[i])){
+                map.Add(nums[i], nums[i]);
             }
             else{
-                map[num] += num;
+                map[nums[i]] += nums[i];
             }
         }
         
@@ -16,34 +17,29 @@ public class Solution {
             arr[index++] = item.Key;
         }
         
-        int[] dp = new int[map.Count+1];
-        
-        return Helper(map, arr, 0, dp);
+        int[] dp = new int[arr.Length+1];
+        return Helper(arr, map, 0, dp);
     }
     
-    
-    private int Helper(SortedDictionary<int,int> map, int[] arr, int index, int[] dp){
-        if(index >= map.Count){
+    private int Helper(int[] arr, SortedDictionary<int,int> map, int index, int[] dp){
+        if(index >= arr.Length)
             return 0;
-        }
         
-        if(dp[index] > 0){
+        if(dp[index] > 0)
             return dp[index];
-        }
         
-        //take the current value and take next value or skip based on condition that next value is +1 than current value
-        int res1 = 0, res2 = 0;
-        if(index < map.Count-1 && arr[index] != arr[index+1]-1){
-            res1 = map[arr[index]] + Helper(map, arr, index+1, dp);
+        int sum1 = map[arr[index]];
+        int sum2 = 0;
+        if(index < arr.Length-1 && arr[index] != arr[index+1]-1){
+            sum1 += Helper(arr, map, index+1, dp);
         }
-        //skip the current value and take the next value
         else{
-            res1 = map[arr[index]] + Helper(map, arr, index+2, dp);
+            sum1 += Helper(arr, map, index+2, dp);
         }
         
-        res2 = Helper(map, arr, index+1, dp);
-        int result = Math.Max(res1, res2);
+        sum2 = Helper(arr, map, index+1, dp);
         
+        int result = Math.Max(sum1, sum2);
         dp[index] = result;
         return result;
     }
