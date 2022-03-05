@@ -1,20 +1,6 @@
 public class Solution {
     public string SimplifyPath(string path) {
         int len = path.Length;
-        //replace multiple slashes with single slash
-        StringBuilder sb = new StringBuilder();
-        sb.Append("/");
-        for(int i = 1; i < len; i++){
-            if(path[i] == '/' && path[i-1] == '/')
-                continue;
-            else{
-                sb.Append(path[i].ToString());
-            }
-        }
-        
-        //Console.WriteLine(sb.ToString());
-        
-        path = sb.ToString();
         string[] paths = path.Split('/');
         Stack<string> st = new Stack<string>();
         
