@@ -44,9 +44,7 @@ public class Solution {
             }
             else{
                 first = true;
-                //Console.WriteLine("once");
             }
-            
             
             prev = curr;
             
