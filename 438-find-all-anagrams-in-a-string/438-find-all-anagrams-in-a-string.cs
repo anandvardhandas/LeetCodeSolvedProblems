@@ -1,55 +1,59 @@
 public class Solution {
     public IList<int> FindAnagrams(string s, string p) {
-        int slen = s.Length, plen = p.Length;
-        int[] smap = new int[26];
-        int[] pmap = new int[26];
+        int slen = s.Length;
+        int plen = p.Length;
         IList<int> result = new List<int>();
-        if(plen > slen)
+        if(slen < plen)
             return result;
         
+        int[] map2 = new int[26];
+        int[] map = new int[26];
         foreach(char c in p){
-            pmap[c-97]++;
+            map[c-97]++;
         }
         
-        int matchcount = 0;
+        int len = 0;
+        //sliding window
         for(int i = 0; i < plen; i++){
-            char c = s[i];
-            if(pmap[c-97] > 0){
-                if(smap[c-97] < pmap[c-97]){
-                    matchcount++;
-                    if(matchcount == plen){
-                        result.Add(0);
-                    }
-                }
-                
-                smap[c-97]++;
+            int index = s[i]-97;
+            if(map[index] > 0){
+                map2[index]++;
+                if(map2[index] <= map[index])
+                    len++;
             }
         }
         
-        int low = 0, hi = plen-1;
-        while(hi < slen-1 && low < slen-1){
-            if(pmap[s[low]-97] > 0){
-                if(smap[s[low]-97] <= pmap[s[low]-97]){
-                    matchcount--;
+        if(len == plen)
+            result.Add(0);
+        
+        int l = 0, r = plen-1;
+        while(r < slen-1){
+            //shift left by 1
+            int index = s[l]-97;
+            if(map[index] > 0){
+                map2[index]--;
+                if(map2[index] < map[index]){
+                    len--;
                 }
-                smap[s[low]-97]--;
             }
             
-            low++;
-            hi++;
+            l++;
             
-            if(pmap[s[hi]-97] > 0){
-                if(smap[s[hi]-97] < pmap[s[hi]-97]){
-                    matchcount++;
+            //shift right by 1
+            r++;
+            index = s[r]-97;
+            if(map[index] > 0){
+                map2[index]++;
+                if(map2[index] <= map[index]){
+                    len++;
                 }
-                
-                smap[s[hi]-97]++;
             }
             
-            if(matchcount == plen){
-                result.Add(low);
-            }
+            if(len == plen)
+                result.Add(l);
+            
         }
+        
         
         return result;
     }
