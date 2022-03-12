@@ -18,32 +18,25 @@ public class Solution {
         if(head == null)
             return head;
         
+        //using hashtable
         Dictionary<Node,Node> map = new Dictionary<Node,Node>();
-        Node dummy = new Node(0);
-        Node curr = dummy;
-        while(head != null){
-            if(map.ContainsKey(head))
-                curr.next = map[head];
-            else
-                curr.next = new Node(head.val);
-            
-             if(!map.ContainsKey(head))
-                map.Add(head, curr.next);
-            
-            if(head.random != null){
-                if(map.ContainsKey(head.random))
-                    curr.next.random = map[head.random];
-                else{
-                    curr.next.random = new Node(head.random.val);
-                    map.Add(head.random, curr.next.random);
-                }
-            }
-            
-            
+        Node curr = head;
+        while(curr != null){
+            Node newnode = new Node(curr.val);
+            map.Add(curr, newnode);
             curr = curr.next;
-            head = head.next;
         }
         
-        return dummy.next;
+       
+        foreach(var item in map){
+            if(item.Key.next != null)
+                item.Value.next = map[item.Key.next];
+            
+            if(item.Key.random != null)
+                item.Value.random = map[item.Key.random];
+        }
+        
+        return map[head];
+        
     }
 }
