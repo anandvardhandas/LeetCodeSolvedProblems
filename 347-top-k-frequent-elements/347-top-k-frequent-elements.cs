@@ -3,48 +3,30 @@ public class Solution {
         int len = nums.Length;
         Dictionary<int,int> map = new Dictionary<int,int>();
         for(int i = 0; i < len; i++){
-            if(!map.ContainsKey(nums[i])){
-                map.Add(nums[i], 1);
-            }
-            else{
+            if(map.ContainsKey(nums[i]))
                 map[nums[i]]++;
-            }
+            else
+                map.Add(nums[i],1);
         }
         
-        //using bucket sort algorithm
-        //create bucket of size n as max frequency of any number can be is n
-        List<int>[] bucket = new List<int>[len+1];
+        PriorityQueue<int,int> pq = new PriorityQueue<int,int>(k, Comparer<int>.Create((x,y) => map[x].CompareTo(map[y])));
         foreach(var item in map){
-            var lst = bucket[item.Value];
-            if(lst == null){
-                lst = new List<int>() { item.Key };
+            if(pq.Count < k){
+                pq.Enqueue(item.Key, item.Key);
             }
             else{
-                lst.Add(item.Key);
+                if(map[pq.Peek()] < item.Value){
+                    pq.Dequeue();
+                    pq.Enqueue(item.Key, item.Key);
+                }
             }
-            
-            bucket[item.Value] = lst;
         }
         
         List<int> result = new List<int>();
-        int count = 0, j = len;
-        while(count < k){
-            while(bucket[j] == null){
-                j--;
-            }
-            
-            List<int> temp = bucket[j];
-            foreach(int item in temp){
-                result.Add(item);
-                count++;
-                if(count == k)
-                    break;
-            }
-            
-            j--;
+        while(pq.Count > 0){
+            result.Add(pq.Dequeue());
         }
         
         return result.ToArray();
     }
 }
-
