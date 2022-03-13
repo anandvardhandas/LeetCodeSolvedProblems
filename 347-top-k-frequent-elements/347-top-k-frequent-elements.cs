@@ -9,15 +9,15 @@ public class Solution {
                 map.Add(nums[i],1);
         }
         
-        PriorityQueue<int,int> pq = new PriorityQueue<int,int>(k, Comparer<int>.Create((x,y) => map[x].CompareTo(map[y])));
+        PriorityQueue<int,int> pq = new PriorityQueue<int,int>(k);
         foreach(var item in map){
             if(pq.Count < k){
-                pq.Enqueue(item.Key, item.Key);
+                pq.Enqueue(item.Key, item.Value);
             }
             else{
                 if(map[pq.Peek()] < item.Value){
                     pq.Dequeue();
-                    pq.Enqueue(item.Key, item.Key);
+                    pq.Enqueue(item.Key, item.Value);
                 }
             }
         }
