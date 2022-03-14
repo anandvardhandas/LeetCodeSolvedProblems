@@ -1,16 +1,6 @@
 public class Solution {
     public string SimplifyPath(string path) {
-        StringBuilder orig = new StringBuilder();
-        orig.Append("/");
-        for(int i = 1; i < path.Length; i++){
-            if((path[i] == '/' && path[i-1] == '/')){
-                continue;
-            }
-            
-            orig.Append(path[i].ToString());
-        }
-        
-        path = orig.ToString();
+       
         
         string[] folders = path.Split('/');
         
