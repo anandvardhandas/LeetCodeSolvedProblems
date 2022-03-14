@@ -1,38 +1,51 @@
 public class Solution {
     public string SimplifyPath(string path) {
-        int len = path.Length;
-        string[] paths = path.Split('/');
-        Stack<string> st = new Stack<string>();
-        
-        for(int i = 0; i < paths.Length; i++){
-            if(paths[i] == "." || paths[i] == ""){
+        StringBuilder orig = new StringBuilder();
+        orig.Append("/");
+        for(int i = 1; i < path.Length; i++){
+            if((path[i] == '/' && path[i-1] == '/')){
                 continue;
             }
-            else if(paths[i] == ".."){
-                if(st.Count > 0)
+            
+            orig.Append(path[i].ToString());
+        }
+        
+        path = orig.ToString();
+        
+        string[] folders = path.Split('/');
+        
+        StringBuilder result = new StringBuilder();
+        
+        Stack<string> st = new Stack<string>();
+        
+        foreach(string fold in folders){
+            if(fold == "." || fold == "")
+                continue;
+            else if(fold == ".."){
+                if(st.Count > 0){
                     st.Pop();
+                }
             }
             else{
-                st.Push(paths[i]);
+                st.Push(fold);
             }
         }
         
+       
         
-        StringBuilder sbres = new StringBuilder();
-        Stack<string> st2 = new Stack<string>();
+        Stack<string> reversed = new Stack<string>();
         while(st.Count > 0){
-            st2.Push(st.Pop());
+            reversed.Push(st.Pop());
         }
         
-        if(st2.Count == 0)
-            return "/";
-        
-        while(st2.Count > 0){
-            sbres.Append("/");
-            sbres.Append(st2.Pop());
+        while(reversed.Count > 0){
+            result.Append("/");
+            result.Append(reversed.Pop());
         }
         
-        string result = sbres.ToString();
-        return result;
+        if(result.ToString() == "")
+            result.Append("/");
+        
+        return result.ToString();
     }
 }
