@@ -29,23 +29,18 @@
  */
 public class Solution {
     public int DepthSum(IList<NestedInteger> nestedList) {
-        int total = 0;
-        foreach(NestedInteger nest in nestedList){
-            total += Helper(nest, 1);
-        }
-        return total;
+        return Helper(nestedList, 1);
     }
     
-    private int Helper(NestedInteger nested, int depth){
-        if(nested.IsInteger()){
-            return depth * nested.GetInteger();
-        }
-        
-        IList<NestedInteger> nestlist = nested.GetList();
-        
+    private int Helper(IList<NestedInteger> nestedList, int depth){
         int total = 0;
-        foreach(NestedInteger nest in nestlist){
-            total += Helper(nest, depth+1);
+        foreach(NestedInteger nested in nestedList){
+            if(nested.IsInteger()){
+                total += depth * nested.GetInteger();
+            }
+            else{
+                total += Helper(nested.GetList(), depth+1);
+            }
         }
         
         return total;
