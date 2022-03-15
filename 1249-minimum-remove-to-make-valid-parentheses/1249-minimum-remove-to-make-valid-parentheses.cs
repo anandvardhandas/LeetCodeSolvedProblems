@@ -1,37 +1,40 @@
 public class Solution {
     public string MinRemoveToMakeValid(string s) {
-        List<char> result = new List<char>();
-        
-        int opened = 0, closed = 0;
-        int i = 0;
-        while(i < s.Length){
-            if(s[i] == '('){
-                opened++;
+        int len = s.Length;
+        int open = 0, close = 0;
+        List<char> chars = new List<char>();
+        foreach(char c in s){
+            if(c == '('){
+                open++;
             }
-            else if(s[i] == ')'){
-                closed++;
+            else if(c == ')'){
+                close++;
+                if(close > open){
+                    close--;
+                    continue;
+                }
+                else{
+                    open--;
+                    close--;
+                }
             }
             
-            if(closed <= opened){
-                result.Add(s[i]);
-            }
-            else{
-                closed--;
-            }
-            
-            i++;
+            chars.Add(c);
         }
         
-        i = result.Count-1;
-        while(i >= 0 && opened > closed){
-            if(result[i] == '('){
-                opened--;
-                result.RemoveAt(i);
+        StringBuilder result = new StringBuilder();
+        //Console.WriteLine(open);
+        for(int i = chars.Count-1; i >= 0; i--){
+            if(chars[i] == '(' && open > 0){
+                open--;
+                continue;
             }
             
-            i--;
+            result.Append(chars[i].ToString());
         }
         
-        return new string(result.ToArray());
+        char[] res = result.ToString().ToCharArray();
+        Array.Reverse(res);
+        return new string(res);
     }
 }
