@@ -1,40 +1,46 @@
 public class MinStack {
-    Stack<Node> st;
+    Node head;
     public MinStack() {
-        st = new Stack<Node>();
+        
     }
     
     public void Push(int val) {
-        Node n = new Node(val,val);
-        if(st.Count > 0){
-            if(val > st.Peek().min){
-                n.min = st.Peek().min;
-            }
+        if(head == null){
+            head = new Node(val,val);
         }
-        
-        st.Push(n);
+        else{
+            Node n = new Node(val,val);
+            if(val > head.min){
+                n.min = head.min;
+            }
+            
+            n.next = head;
+            head = n;
+        }
     }
     
     public void Pop() {
-        st.Pop();
+        head = head.next;
     }
     
     public int Top() {
-        return st.Peek().val;
+        return head.val;
     }
     
     public int GetMin() {
-        return st.Peek().min;
+        return head.min;
     }
 }
 
 public class Node{
     public int val;
     public int min;
+    public Node next;
     
-    public Node(int _val, int _min){
+    public Node(int _val, int _min, Node _next = null){
         val = _val;
         min = _min;
+        next = _next;
     }
 }
 
