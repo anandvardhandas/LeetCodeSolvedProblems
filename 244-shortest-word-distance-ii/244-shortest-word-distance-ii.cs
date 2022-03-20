@@ -1,8 +1,8 @@
 public class WordDistance {
-     Dictionary<string, List<int>> map = new Dictionary<string, List<int>>();
+    public Dictionary<string,List<int>> map;
     public WordDistance(string[] wordsDict) {
-        int len = wordsDict.Length;
-        for(int i = 0; i < len; i++){
+        map = new Dictionary<string,List<int>>();
+        for(int i = 0; i < wordsDict.Length; i++){
             if(map.ContainsKey(wordsDict[i])){
                 map[wordsDict[i]].Add(i);
             }
@@ -13,21 +13,21 @@ public class WordDistance {
     }
     
     public int Shortest(string word1, string word2) {
-         List<int> lst1 = map[word1];
-        List<int> lst2 = map[word2];
+        List<int> list1 = map[word1];
+        List<int> list2 = map[word2];
         
         int l = 0, r = 0;
-        
         int mindist = int.MaxValue;
-        while(l < lst1.Count && r < lst2.Count){
-            mindist = Math.Min(mindist, Math.Abs(lst1[l]-lst2[r]));
+        while(l < list1.Count && r < list2.Count){
+            mindist = Math.Min(mindist, Math.Abs(list1[l]-list2[r]));
             if(mindist == 1)
                 return 1;
-            if(lst2[r] < lst1[l]){
-                r++;
+            
+            if(list1[l] < list2[r]){
+                l++;
             }
             else{
-                l++;
+                r++;
             }
         }
         
