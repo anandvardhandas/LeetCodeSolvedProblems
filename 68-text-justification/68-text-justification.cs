@@ -4,22 +4,23 @@ public class Solution {
         int len = words.Length;
         int i = 0;
         while(i < len){
-            int wordcount = words[i].Length;
             int j = i+1;
-            
+            int wordcount = words[i].Length;
             int spacecount = 0;
-            while(j < words.Length && wordcount + spacecount + words[j].Length + 1 <= maxWidth){
+            
+            while(j < len && wordcount + spacecount + words[j].Length + 1 <= maxWidth){
                 wordcount += words[j].Length;
                 spacecount++;
                 j++;
             }
             
-            int spacesleft = maxWidth-wordcount;
+            int spaceleft = maxWidth-wordcount;
             
-            int atleast = spacecount == 0 ? 0 : spacesleft/spacecount;
-            int extra = spacecount == 0 ? 0 : spacesleft % spacecount;
-            //last line
-            if(j == words.Length){
+            int atleast = spacecount == 0 ? 0 : spaceleft/spacecount;
+            int extra = spacecount == 0 ? 0 : spaceleft % spacecount;
+            
+            //for last line
+            if(j == len){
                 atleast = 1;
                 extra = 0;
             }
@@ -47,6 +48,7 @@ public class Solution {
             result.Add(sb.ToString());
             
             i = j;
+            
         }
         
         
