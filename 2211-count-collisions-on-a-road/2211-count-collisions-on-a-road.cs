@@ -1,9 +1,7 @@
 public class Solution {
     public int CountCollisions(string directions) {
-        
-        
         int len = directions.Length;
-        int pc = 1;
+        int prevRCount = 1;
         int total = 0;
         char prev = directions[0];
         for(int i = 1; i < len; i++){
@@ -12,10 +10,10 @@ public class Solution {
                 if(prev == 'R'){
                     total += 2;
                     prev = 'S';
-                    if(pc > 1){
-                        total += pc-1;
+                    if(prevRCount > 1){
+                        total += prevRCount-1;
                     }
-                    pc = 1;
+                    prevRCount = 1;
                 }
                 else if(prev == 'S'){
                     total += 1;
@@ -23,9 +21,9 @@ public class Solution {
             }
             else if(c == 'S'){
                 if(prev == 'R'){
-                    total += pc*1;
+                    total += prevRCount*1;
                     prev = 'S';
-                    pc = 1;
+                    prevRCount = 1;
                 }
                 else if(prev == 'L'){
                     prev = 'S';
@@ -39,7 +37,7 @@ public class Solution {
                     prev = 'R';
                 }
                 else if(prev == 'R'){
-                    pc++;
+                    prevRCount++;
                 }
             }
         }
