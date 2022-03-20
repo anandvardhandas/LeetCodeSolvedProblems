@@ -7,7 +7,6 @@ public class Solution {
     }
     
     private long Calc(string text, string pattern){
-        
         long count = 0;
         long total = 0;
         for(int i = text.Length-1; i >= 0; i--){
@@ -23,7 +22,6 @@ public class Solution {
             return ((count-1)*count)/2;
         }
         
-        //Console.WriteLine($"{text} {pattern} {total}");
         return total;
     }
 }
