@@ -13,7 +13,7 @@
  */
 public class Solution {
     public IList<int> ClosestKValues(TreeNode root, double target, int k) {
-        PriorityQueue<int,int> pq = new PriorityQueue<int,int>(k, Comparer<int>.Create((x,y) => Math.Abs(y-target).CompareTo(Math.Abs(x-target))));
+        Queue<int> pq = new Queue<int>(k);
         Inorder(root, pq, k, target);
         
         
@@ -25,19 +25,21 @@ public class Solution {
         return result;
     }
     
-    private void Inorder(TreeNode root, PriorityQueue<int,int> pq, int k, double target){
+    private void Inorder(TreeNode root, Queue<int> pq, int k, double target){
         if(root == null)
             return;
         
         Inorder(root.left, pq, k, target);
         if(pq.Count < k){
-            pq.Enqueue(root.val,root.val);
+            pq.Enqueue(root.val);
         }
         else{
             if(Math.Abs(root.val-target) < Math.Abs(pq.Peek()-target)){
                 pq.Dequeue();
-                pq.Enqueue(root.val, root.val);
+                pq.Enqueue(root.val);
             }
+            else
+                return;
         }
         Inorder(root.right, pq, k, target);
     }
