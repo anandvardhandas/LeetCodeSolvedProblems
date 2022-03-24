@@ -1,22 +1,22 @@
 public class Solution {
     public int NumRescueBoats(int[] people, int limit) {
-        //3,3,4,5
         Array.Sort(people);
-        int l = 0, r = people.Length-1;
+        int len = people.Length;
+        int boats = 0;
+        int l = 0, r = len-1;
         
-        int total = 0;
-        while(l<=r){
-            if(people[l]+people[r] > limit){
-                total++;
-                r--;
-            }
-            else{
-                total++;
+        while(l <= r){
+            if(people[l]+people[r] <= limit){
                 l++;
                 r--;
             }
+            else{
+                r--;
+            }
+            
+            boats++;
         }
         
-        return total;
+        return boats;
     }
 }
