@@ -1,7 +1,7 @@
 public class Solution {
     public int TwoCitySchedCost(int[][] costs) {
         Array.Sort(costs, Comparer<int[]>.Create((x,y) => {
-            return (x[0]-x[1]).CompareTo(y[0]-y[1]);
+            return (x[1]-x[0]).CompareTo(y[1]-y[0]);
         }));
         
         int n = costs.Length/2;
@@ -9,10 +9,10 @@ public class Solution {
         int totalcost = 0;
         for(int i = 0; i < costs.Length; i++){
             if(i < n){
-                totalcost += costs[i][0];
+                totalcost += costs[i][1];
             }
             else{
-                totalcost += costs[i][1];
+                totalcost += costs[i][0];
             }
         }
         
