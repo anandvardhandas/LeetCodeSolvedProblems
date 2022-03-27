@@ -4,13 +4,19 @@ public class Solution {
         int[] solds = new int[m];
         
         for(int i = 0; i < m; i++){
-            int total = 0;
-            for(int j = 0; j < n; j++){
-                if(mat[i][j] == 1)
-                    total++;
+            int low = 0, hi = n-1;
+            while(low < hi){
+                int mid = low + (hi-low)/2;
+                if(mat[i][mid] == 1)
+                    low = mid+1;
+                else{
+                    hi = mid;
+                }
             }
             
-            solds[i] = total;
+            if(mat[i][low] == 1)
+                low++;
+            solds[i] = low;
         }
         
         
