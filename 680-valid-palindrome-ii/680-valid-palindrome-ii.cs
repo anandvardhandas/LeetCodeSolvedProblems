@@ -1,39 +1,40 @@
 public class Solution {
     public bool ValidPalindrome(string s) {
         int len = s.Length;
+        int l = 0, r = len-1;
         
-        int i = 0, j = len-1;
-        int count = 0;
-        while(i <= j){
-            while(i <= j && s[i] == s[j]){
-                i++;
-                j--;
+        int passl = 0;
+        while(l<r){
+            if(s[l] == s[r]){
+                l++;
+                r--;
             }
-            
-            if(i <= j && s[i] != s[j]){
-                count++;
-                j--;
+            else{
+                passl++;
+                l++;
             }
         }
         
-        i = 0; 
-        j = len-1;
-        int countr = 0;
-        while(i <= j){
-            while(i <= j && s[i] == s[j]){
-                i++;
-                j--;
+        l = 0;
+        r = len-1;
+        int passr = 0;
+        while(l<r){
+            if(s[l] == s[r]){
+                l++;
+                r--;
             }
-            
-            if(i <= j && s[i] != s[j]){
-                countr++;
-                i++;
+            else{
+                passr++;
+                r--;
             }
         }
         
-        if(count <= 1 || countr <= 1)
+        if(passl < 2 || passr < 2)
             return true;
         
         return false;
     }
 }
+
+// rgacecar
+// rabcar
