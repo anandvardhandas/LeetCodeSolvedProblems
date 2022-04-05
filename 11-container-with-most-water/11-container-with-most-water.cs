@@ -1,25 +1,29 @@
 public class Solution {
     public int MaxArea(int[] height) {
         int len = height.Length;
-        int low = 0, hi = len-1;
-        int max = 0;
         
-        while(low < hi){
-            int width = hi-low;
-            int hei = Math.Min(height[low], height[hi]);
-            max = Math.Max(max, width * hei);
-            if(height[low] > height[hi]){
-                hi--;
+        int l = 0, r = len-1;
+        
+        int maxArea = 0;
+        while(l<r){
+            int width = r-l;
+            int length = Math.Min(height[l], height[r]);
+            int currArea = width * length;
+            
+            maxArea = Math.Max(maxArea, currArea);
+            
+            if(height[l] > height[r]){
+                r--;
             }
-            else if(height[low] < height[hi]){
-                low++;
+            else if(height[l] < height[r]){
+                l++;
             }
             else{
-                low++;
-                hi--;
+                l++;
+                r--;
             }
         }
         
-        return max;
+        return maxArea;
     }
 }
