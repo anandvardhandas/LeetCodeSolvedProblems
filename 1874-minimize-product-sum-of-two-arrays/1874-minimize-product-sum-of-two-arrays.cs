@@ -17,18 +17,39 @@ public class Solution {
         
         */
         
-        Array.Sort(nums1);
-        Array.Sort(nums2);
-        
         int len = nums1.Length;
-        int i = 0, j = len-1;
+        int[] map1 = new int[101];
+        int[] map2 = new int[101];
+        
+        for(int i = 0; i < len; i++){
+            map1[nums1[i]]++;
+            map2[nums2[i]]++;
+        }
+        
+        // [0,0,1,1,1,1]
+        // [0,0,2,0,1,1]
         
         int total = 0;
-        while(i < len && j >= 0){
-            total += nums1[i] * nums2[j];
-            i++;
-            j--;
+        int l = 1, r = 100;
+        int count = 0;
+        while(count < len){
+            while(map1[l] == 0){
+                l++;
+            }
+            
+            //Console.WriteLine(l);
+            while(map2[r] == 0){
+                r--;
+            }
+            //Console.WriteLine(r);
+            total += l * r;
+            
+            map1[l]--;
+            map2[r]--;
+            
+            count++;
         }
+        
         
         return total;
     }
