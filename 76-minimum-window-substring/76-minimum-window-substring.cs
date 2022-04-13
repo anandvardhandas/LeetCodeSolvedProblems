@@ -29,6 +29,7 @@ public class Solution {
         int count = 0;
         while(r < len){
             
+            //shift r to make count == size
             while(r < len && count < size){
                 if(map.ContainsKey(s[r])){
                     map2[s[r]]++;
@@ -46,6 +47,7 @@ public class Solution {
                 }
             }
             
+            //shrink or shift l till count == size
             while(count == size){
                 if(map.ContainsKey(s[l])){
                     map2[s[l]]--;
