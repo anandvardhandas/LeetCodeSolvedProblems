@@ -12,17 +12,6 @@ public class Solution {
             graph[to].Add(from);
         }
         
-        /*
-        foreach(var item in graph){
-            Console.WriteLine("------------");
-            Console.WriteLine("key" + item.Key);
-            foreach(int num in item.Value){
-                Console.WriteLine(num);
-            }
-        }
-        */
-        
-        
         int[] visited = new int[n];
         if(!Helper(graph, 0, visited, -1))
             return false;
@@ -36,10 +25,8 @@ public class Solution {
     
     private bool Helper(Dictionary<int,List<int>> graph, int node, int[] visited, int parent){
         visited[node] = 1;
-        //Console.WriteLine($"node: {node} and parent: {parent}");
         List<int> childs = graph[node];
         foreach(int child in childs){
-            // Console.WriteLine($"child: {child}");
             if(child != parent && visited[child] == 1)
                 return false;
             
