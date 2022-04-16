@@ -1,10 +1,11 @@
 public class Solution {
     public int GetSum(int a, int b) {
-        int hld = 0;
+        
         while(b != 0){
-            hld = a & b;
+            int prevA = a;
             a = a ^ b;
-            b = hld << 1;
+        
+            b = (prevA & b) << 1;
         }
         
         return a;
