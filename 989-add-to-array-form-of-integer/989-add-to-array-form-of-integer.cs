@@ -35,8 +35,6 @@ public class Solution {
             result.Add(carry);
         }
         
-        int[] res = result.ToArray();
-        Array.Reverse(res);
-        return res.ToList();
+        return result.Reverse().ToList();
     }
 }
