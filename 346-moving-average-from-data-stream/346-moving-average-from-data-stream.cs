@@ -1,24 +1,29 @@
 public class MovingAverage {
-    Queue<int> que = new Queue<int>();
-    private int size = 0;
-    private int sum = 0;
+    
+    public int cap;
+    public int total;
+    public Queue<int> que;
     public MovingAverage(int size) {
-        this.size = size;
+        cap = size;
+        total = 0;
+        
+        que = new Queue<int>();
     }
     
     public double Next(int val) {
-        if(que.Count == size){
-            sum -= que.Dequeue();
-            que.Enqueue(val);
+        que.Enqueue(val);
+        if(que.Count <= cap){
+            total += val;
             
-            sum += val;
+            return (double) total/que.Count;
+            
         }
         else{
-            que.Enqueue(val);
-            sum += val;
+            int removed = que.Dequeue();
+            total = total - removed;
+            total = total + val;
+            return (double) total/cap;
         }
-        
-        return (double)sum/que.Count;
     }
 }
 
