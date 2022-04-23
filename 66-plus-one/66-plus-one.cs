@@ -4,24 +4,21 @@ public class Solution {
         int len = digits.Length;
         
         int i = len-1;
-        int carry = 1;
-        List<int> result = new List<int>();
+        
         while(i >= 0){
-            int sum = carry+digits[i];
-            carry = sum/10;
-            sum = sum%10;
-            result.Add(sum);
+            if(digits[i] < 9){
+                digits[i]++;
+                return digits;
+            }
+            else{
+                digits[i] = 0;
+            }
             
             i--;
         }
         
-        if(carry > 0){
-            result.Add(carry);
-        }
-        
-        int[] res = result.ToArray();
-        Array.Reverse(res);
-        
-        return res;
+        int[] result = new int[len+1];
+        result[0] = 1;
+        return result;
     }
 }
