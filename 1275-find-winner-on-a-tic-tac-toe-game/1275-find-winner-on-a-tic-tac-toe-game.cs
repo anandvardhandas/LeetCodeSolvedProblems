@@ -1,34 +1,36 @@
 public class Solution {
     public string Tictactoe(int[][] moves) {
-        int[,] grid = new int[3,3];
-        bool fora = true;
+        int n = 3;
+        
+        int[] rows = new int[3];
+        int[] cols = new int[3];
+        int diag = 0, adiag = 0;
+        int player = 1;
         for(int i = 0; i < moves.Length; i++){
-            if(fora){
-                grid[moves[i][0],moves[i][1]] = 1;
-                fora = false;
+            int row = moves[i][0], col = moves[i][1];
+            rows[row] += player;
+            cols[col] += player;
+            
+            if(row == col){
+                diag += player;
             }
-            else{
-                grid[moves[i][0],moves[i][1]] = -1;
-                fora = true;
+            
+            if(row+col == n-1){
+                //anti diag
+                adiag += player;
             }
             
             if(i >= 4){
-                int num = 0;
-                if(!fora){
-                    num = 1;
-                }
-                else{
-                    num = -1;
-                }
-                
-                bool iswinner = Check(grid, moves[i][0],moves[i][1], num);
-                if(iswinner){
-                    if(!fora)
+                //check winning
+                if(Math.Abs(rows[row]) == n || Math.Abs(cols[col]) == n || Math.Abs(diag) == n || Math.Abs(adiag) == n){
+                    if(player == 1)
                         return "A";
                     else
                         return "B";
                 }
             }
+            
+            player = player * -1; //switch player
         }
         
         if(moves.Length < 9)
@@ -37,40 +39,5 @@ public class Solution {
         return "Draw";
     }
     
-    private bool Check(int[,] grid, int i, int j, int num){
-        //row check
-        bool same = true;
-        for(int col = 0; col <= 2; col++){
-            if(grid[i,col] != num){
-                same = false;
-                break;
-            }
-        }
-        
-        if(same)
-            return true;
-        
-        //col check
-        same = true;
-        for(int row = 0; row <= 2; row++){
-            if(grid[row,j] != num){
-                same = false;
-                break;
-            }
-        }
-        
-        if(same)
-            return true;
-        
-        //diag check
-        if(grid[0,0] == num && grid[1,1] == num && grid[2,2] == num){
-            return true;
-        }
-
-        if(grid[2,0] == num && grid[1,1] == num && grid[0,2] == num){
-            return true;
-        }
-        
-        return false;
-    }
+    
 }
