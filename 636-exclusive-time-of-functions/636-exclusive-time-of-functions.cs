@@ -40,12 +40,8 @@ public class Solution {
             }
         }
         
-        
-        
         return result;
     }
-    
-    
 }
 
 public class Node{
