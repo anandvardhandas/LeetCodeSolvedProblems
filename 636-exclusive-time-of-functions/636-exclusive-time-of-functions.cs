@@ -1,7 +1,7 @@
 public class Solution {
     public int[] ExclusiveTime(int n, IList<string> logs) {
+        
         int[] result = new int[n];
-        int lastend = -1;
         
         Stack<Node> st = new Stack<Node>();
         
@@ -11,44 +11,38 @@ public class Solution {
             string pos = parts[1];
             int time = int.Parse(parts[2]);
             
+            Node node = new Node(fid, 0, time);
+            
             if(pos == "start"){
-                if(st.Count > 0){
-                    Node npeeked = st.Peek();
-                    if(npeeked.start > lastend){
-                        result[npeeked.fid] += time-npeeked.start;
-                    }
-                    else{
-                        result[npeeked.fid] += time-lastend-1;
-                    }
-                    
-                    st.Push(new Node(fid,time));
-                }
-                else{
-                    st.Push(new Node(fid,time));
-                }
+                st.Push(node);
             }
             else{
-                Node npopped = st.Pop();
-                if(npopped.start >= lastend){
-                    result[fid] += time - npopped.start+1;
-                    lastend = time;
-                }
-                else{
-                    result[fid] += time - lastend;
-                    lastend = time;
+                Node popped = st.Pop();
+                int interval = time-popped.time+1;
+                int total = interval-popped.child;
+                result[fid] += total;
+                
+                if(st.Count > 0){
+                    st.Peek().child += interval;
                 }
             }
         }
         
         return result;
     }
+    
+    
 }
 
 public class Node{
-    public int start;
     public int fid;
-    public Node(int _fid, int _start){
-        start = _start;
+    public int child;
+    public int time;
+    
+    public Node(int _fid, int _child, int _time){
         fid = _fid;
+        child = _child;
+        time = _time;
     }
+    
 }
