@@ -10,12 +10,6 @@
 
 public class Solution {
     public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        
-        return Helper(root, p, q);
-        
-    }
-    
-    private TreeNode Helper(TreeNode root, TreeNode p, TreeNode q){
         if(root == null)
             return null;
         
@@ -27,10 +21,11 @@ public class Solution {
             return root;
         
         if(p.val > root.val && q.val > root.val){
-            return Helper(root.right, p, q);
+            return LowestCommonAncestor(root.right, p, q);
         }
         else{
-            return Helper(root.left, p, q);
+            return LowestCommonAncestor(root.left, p, q);
         }
+        
     }
 }
