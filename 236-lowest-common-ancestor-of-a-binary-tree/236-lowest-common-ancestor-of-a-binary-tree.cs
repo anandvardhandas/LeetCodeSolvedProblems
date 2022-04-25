@@ -9,41 +9,32 @@
  */
 public class Solution {
     public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        List<int> ppath = new List<int>();
-        List<int> qpath = new List<int>();
-        
-        FindRootToNodePath(root, ppath, p);
-        FindRootToNodePath(root, qpath, q);
-        
-        int lca = 0;
-        int i = 0;
-        while(i <= ppath.Count-1 && i <= qpath.Count-1 && ppath[i] == qpath[i]){
-            lca = ppath[i];
-            i++;
-        }
-        
-        return new TreeNode(lca);
+        return Helper(root, p, q);
     }
     
-    
-    private bool FindRootToNodePath(TreeNode root, List<int> path, TreeNode find){
+    private TreeNode Helper(TreeNode root, TreeNode p, TreeNode q){
         if(root == null)
-            return false;
+            return null;
         
-        if(root.val == find.val){
-            path.Add(root.val);
-            return true;
+        
+        TreeNode left = Helper(root.left, p, q);
+        TreeNode right = Helper(root.right, p, q);
+        
+        if(right != null && left != null){
+            return root;
         }
         
-        path.Add(root.val);
-        bool found = FindRootToNodePath(root.left, path, find);
-        if(found)
-            return true;
-        found = FindRootToNodePath(root.right, path, find);
-        if(found)
-            return true;
-        path.RemoveAt(path.Count-1);
+        if(root == p || root == q)
+            return root;
         
-        return false;
+        if(right == null){
+            return left;
+        }
+        
+        if(left == null){
+            return right;
+        }
+        
+        return null;
     }
 }
