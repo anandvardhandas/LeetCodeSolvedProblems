@@ -9,6 +9,10 @@
  */
 public class Solution {
     public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null){
+            return null;
+        }
+        
         return Helper(root, p, q);
     }
     
@@ -20,20 +24,19 @@ public class Solution {
         TreeNode left = Helper(root.left, p, q);
         TreeNode right = Helper(root.right, p, q);
         
-        if(right != null && left != null){
+        if(left != null && right != null){
             return root;
         }
         
-        if(root == p || root == q)
+        if(root == p || root == q){
             return root;
+        }
         
-        if(right == null){
+        if(left != null)
             return left;
-        }
         
-        if(left == null){
+        if(right != null)
             return right;
-        }
         
         return null;
     }
