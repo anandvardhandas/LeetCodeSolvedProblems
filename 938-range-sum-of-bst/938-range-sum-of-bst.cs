@@ -12,32 +12,29 @@
  * }
  */
 public class Solution {
-    private int sum;
     public int RangeSumBST(TreeNode root, int low, int high) {
-        sum = 0;
+        int sum = 0;
         if(root == null){
             return sum;
         }
         
-        Helper(root, low, high);
+        Queue<TreeNode> que = new Queue<TreeNode>();
+        que.Enqueue(root);
+        while(que.Count > 0){
+            root = que.Dequeue();
+            if(root.val >= low && root.val <= high){
+                sum += root.val;
+            }
+
+            if(root.val > low && root.left != null){
+                que.Enqueue(root.left);
+            }
+
+            if(root.val < high && root.right != null){
+                que.Enqueue(root.right);
+            }
+        }
+        
         return sum;
-    }
-    
-    private void Helper(TreeNode root, int low, int high){
-        if(root == null)
-            return;
-        
-        if(root.val >= low && root.val <= high){
-            sum += root.val;
-        }
-        
-        if(root.val > low){
-            Helper(root.left, low, high);
-        }
-        
-        if(root.val < high){
-            Helper(root.right, low, high);
-        }
-        
     }
 }
