@@ -7,9 +7,6 @@ public class Solution {
         
         int[] prefix = new int[len];
         prefix[0] = nums[0];
-        for(int i = 1; i < len; i++){
-            prefix[i] = prefix[i-1] + nums[i];
-        }
         
         //[2,1,-2,2,1] k = 3
         //[2,3,1,3,4]
@@ -17,6 +14,9 @@ public class Solution {
         //[1,2,3]
         int total = 0;
         for(int i = 0; i < len; i++){
+            if(i > 0){
+                prefix[i] = prefix[i-1]+nums[i];
+            }
             if(map.ContainsKey(prefix[i]-k)){
                 //Console.WriteLine(i);
                 total += map[prefix[i]-k];
