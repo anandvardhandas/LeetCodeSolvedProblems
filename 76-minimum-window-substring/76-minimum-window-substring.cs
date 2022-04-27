@@ -1,70 +1,89 @@
 public class Solution {
     public string MinWindow(string s, string t) {
-        int minlen = int.MaxValue;
-        string minstring = "";
+        if(t.Length > s.Length)
+            return "";
         
-        int size = t.Length;
-        int len = s.Length;
+        string alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         
-        Dictionary<char,int> map = new Dictionary<char,int>();
+        
         Dictionary<char,int> map2 = new Dictionary<char,int>();
-        string str = "abcdefghijklmnopqrstuvwxyz";
-        foreach(char c in str){
-            map2.Add(c,0);
-            map2.Add(Char.ToUpper(c),0);
-        }
+        Dictionary<char,int> map1 = new Dictionary<char,int>();
+        
+        FillMap(map2,alpha);
+        FillMap(map1,alpha);
         
         foreach(char c in t){
-            if(map.ContainsKey(c)){
-                map[c]++;
-            }
-            else{
-                map.Add(c,1);
-            }
+            map2[c]++;
         }
+        
+        int count = 0;
+        
+        int len = s.Length;
+        int size = t.Length;
         
         int l = 0, r = 0;
         
-        
-        int count = 0;
+        int min = int.MaxValue;
+        string res = "";
         while(r < len){
+            //expand right to get all charcs of t
             
-            //shift r to make count == size
-            while(r < len && count < size){
-                if(map.ContainsKey(s[r])){
-                    map2[s[r]]++;
-                    if(map2[s[r]] <= map[s[r]]){
+            while(r < len){
+                char ch = s[r];
+                if(map2[ch] > 0){
+                    if(map1[ch] < map2[ch]){
                         count++;
-                    }
-                }
-                r++;
-            }
-            
-            if(count == size){
-                if(r-l < minlen){
-                    minlen = r-l;
-                    minstring = s.Substring(l, minlen);
-                }
-            }
-            
-            //shrink or shift l till count == size
-            while(count == size){
-                if(map.ContainsKey(s[l])){
-                    map2[s[l]]--;
-                    if(map2[s[l]] < map[s[l]]){
-                        count--;
-                        
-                        if(r-l < minlen){
-                            minlen = r-l;
-                            minstring = s.Substring(l, minlen);
+                        if(count == size){
+                            map1[ch]++;
+                            r++;
+                            break;
                         }
                     }
+                    
+                    map1[ch]++;
+                }
+                
+                r++;
+            }
+            //Console.WriteLine(l);
+            //Console.WriteLine(r);
+            if(count == size && r-l < min){
+                min = r-l;
+                res = s.Substring(l, min);
+                //Console.WriteLine(res);
+            }
+            
+            //shrink left till it is valid
+            while(l < len){
+                char ch = s[l];
+                if(map2[ch] > 0){
+                    if(map1[ch] <= map2[ch]){
+                        count--;
+                        map1[ch]--;
+                        
+                        l++;
+                        break;
+                    }
+                    
+                    map1[ch]--;
                 }
                 
                 l++;
+                if(count == size && r-l < min){
+                    //Console.WriteLine("r:"+r);
+                    min = r-l;
+                    res = s.Substring(l, min);
+                }
             }
+            
         }
         
-        return minstring;
+        return res;
+    }
+    
+    private void FillMap(Dictionary<char,int> map, string alpha){
+        foreach(char c in alpha){
+            map.Add(c,0);
+        }
     }
 }
