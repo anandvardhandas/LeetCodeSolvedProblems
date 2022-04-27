@@ -1,83 +1,88 @@
 public class Solution {
-    public string MinWindow(string s, string t) {
-        if(t.Length > s.Length)
-            return "";
-        
+    public  string MinWindow(string s, string t)
+    {
         string alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        
-        
-        Dictionary<char,int> map2 = new Dictionary<char,int>();
-        Dictionary<char,int> map1 = new Dictionary<char,int>();
-        
-        FillMap(map2,alpha);
-        FillMap(map1,alpha);
-        
-        foreach(char c in t){
+
+
+        Dictionary<char, int> map2 = new Dictionary<char, int>();
+        Dictionary<char, int> map1 = new Dictionary<char, int>();
+
+        FillMap(map2, alpha);
+        FillMap(map1, alpha);
+
+        foreach (char c in t)
+        {
             map2[c]++;
         }
-        
+
         int count = 0;
-        
+
         int len = s.Length;
         int size = t.Length;
-        
+
         int l = 0, r = 0;
-        
+
         int min = int.MaxValue;
         string res = "";
-        while(r < len){
+        while (r < len)
+        {
             //expand right to get all charcs of t
-            
-            while(r < len){
+            //"ADOBECODEBANC", "ABC"
+            while (r < len)
+            {
                 char ch = s[r];
-                if(map2[ch] > 0){
-                    if(map1[ch] < map2[ch]){
+                if (map2[ch] > 0)
+                {
+                    if (map1[ch] < map2[ch])
+                    {
                         count++;
-                        if(count == size){
+                        if (count == size)
+                        {
                             map1[ch]++;
                             r++;
                             break;
                         }
                     }
-                    
+
                     map1[ch]++;
                 }
-                
+
                 r++;
             }
-            //Console.WriteLine(l);
-            //Console.WriteLine(r);
-            if(count == size && r-l < min){
-                min = r-l;
+
+            if (count == size && r - l < min)
+            {
+                min = r - l;
                 res = s.Substring(l, min);
-                //Console.WriteLine(res);
             }
-            
+            //"ADOBECODEBANC", "ABC"
             //shrink left till it is valid
-            while(l < len){
+            while (l < len)
+            {
                 char ch = s[l];
-                if(map2[ch] > 0){
-                    if(map1[ch] <= map2[ch]){
+                if (map2[ch] > 0)
+                {
+                    if (map1[ch] <= map2[ch])
+                    {
                         count--;
                         map1[ch]--;
-                        
                         l++;
                         break;
                     }
-                    
+
                     map1[ch]--;
                 }
-                
+
                 l++;
-                if(count == size && r-l < min){
-                    //Console.WriteLine("r:"+r);
-                    min = r-l;
+                if (count == size && r - l < min)
+                {
+                    min = r - l;
                     res = s.Substring(l, min);
                 }
             }
-            
+
         }
-        
+
         return res;
     }
     
