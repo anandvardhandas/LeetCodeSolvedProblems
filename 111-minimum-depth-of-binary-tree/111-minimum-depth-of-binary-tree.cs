@@ -16,30 +16,29 @@ public class Solution {
         if(root == null)
             return 0;
         
-        int level = 1;
-        Queue<TreeNode> que = new Queue<TreeNode>();
-        que.Enqueue(root);
+        return 1 + Helper(root);
+    }
+    
+    private int Helper(TreeNode root){
+        if(root == null)
+            return int.MaxValue;
         
-        while(que.Count > 0){
-            int size = que.Count;
-            for(int i = 1; i <= size; i++){
-                TreeNode node = que.Dequeue();
-                if(node.left == null && node.right == null){
-                    return level;
-                }
-                
-                if(node.left != null){
-                    que.Enqueue(node.left);
-                }
-                
-                if(node.right != null){
-                    que.Enqueue(node.right);
-                }
-            }
+        if(root.left == null && root.right == null){
+            return 0;
+        }
             
-            level++;
+        int lheight = Helper(root.left);
+        
+        int rheight = Helper(root.right);
+        
+        if(lheight == int.MaxValue){
+            return rheight+1;
         }
         
-        return 0;
+        if(rheight == int.MaxValue){
+            return lheight+1;
+        }
+        
+        return 1+ Math.Min(lheight,rheight);
     }
 }
