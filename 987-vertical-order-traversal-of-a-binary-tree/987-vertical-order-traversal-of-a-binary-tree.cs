@@ -14,15 +14,14 @@
 public class Solution {
     public IList<IList<int>> VerticalTraversal(TreeNode root) {
         IList<IList<int>> result = new List<IList<int>>();
+        if(root == null)
+            return result;
+        Queue<Node> que = new Queue<Node>();
         
         Dictionary<int,PriorityQueue<Node,Node>> map = new Dictionary<int,PriorityQueue<Node,Node>>();
-        
-        Queue<Node> que = new Queue<Node>();
-        que.Enqueue(new Node(root, 0));
+        int maxcol = 0, mincol = 0;
+        que.Enqueue(new Node(root,1,0));
         int level = 1;
-        
-        int mincol = 0, maxcol = 0;
-        
         while(que.Count > 0){
             int size = que.Count;
             for(int i = 1; i <= size; i++){
@@ -30,48 +29,52 @@ public class Solution {
                 
                 int col = node.col;
                 
-                mincol = Math.Min(mincol,col);
-                maxcol = Math.Max(maxcol,col);
+                maxcol = Math.Max(maxcol, col);
+                mincol = Math.Min(mincol, col);
                 
-                if(!map.ContainsKey(col)){
-                    PriorityQueue<Node,Node> pq = 
-                    new PriorityQueue<Node,Node>(Comparer<Node>.Create((x,y) => {
+                if(map.ContainsKey(col)){
+                    map[col].Enqueue(node,node);
+                }
+                else{
+                    PriorityQueue<Node,Node> pq = new PriorityQueue<Node,Node>(Comparer<Node>.Create((x,y) => {
                         if(x.level != y.level){
                             return x.level.CompareTo(y.level);
                         }
                         else{
-                            return x.val.CompareTo(y.val);
+                            return x.root.val.CompareTo(y.root.val);
                         }
                     }));
                     
-                    Node newnode = new Node(node.root.val,level,col);
-                    pq.Enqueue(newnode,newnode);
-                    map.Add(col, pq);
-                }
-                else{
-                    Node newnode = new Node(node.root.val,level,col);
-                    map[col].Enqueue(newnode,newnode);
+                    pq.Enqueue(node,node);
+                    
+                    map.Add(col,pq);
+                        
                 }
                 
                 if(node.root.left != null){
-                    que.Enqueue(new Node(node.root.left, col-1));
+                    Node newnode = new Node(node.root.left, level+1, col-1);
+                    que.Enqueue(newnode);
                 }
                 
                 if(node.root.right != null){
-                    que.Enqueue(new Node(node.root.right, col+1));
+                    Node newnode = new Node(node.root.right, level+1, col+1);
+                    que.Enqueue(newnode);
                 }
             }
             
             level++;
         }
         
+        //Console.WriteLine(mincol);
+        //Console.WriteLine(maxcol);
         
-        for(int j = mincol; j <= maxcol; j++){
-            var poppedpq = map[j];
+        
+        for(int i = mincol; i<= maxcol; i++){
+            var pqueue = map[i];
             IList<int> res = new List<int>();
-            while(poppedpq.Count > 0){
-                Node popped = poppedpq.Dequeue();
-                res.Add(popped.val);
+            while(pqueue.Count > 0){
+                Node pop = pqueue.Dequeue();
+                res.Add(pop.root.val);
             }
             
             result.Add(res);
@@ -83,17 +86,12 @@ public class Solution {
 
 public class Node{
     public int level;
-    public int val;
-    public int col;
     public TreeNode root;
-    public Node(int _val, int _level, int _col){
-        level = _level;
-        val = _val;
-        col = _col;
-    }
+    public int col;
     
-    public Node(TreeNode _root, int _col){
+    public Node(TreeNode _root, int _level, int _col){
         root = _root;
+        level = _level;
         col = _col;
     }
 }
