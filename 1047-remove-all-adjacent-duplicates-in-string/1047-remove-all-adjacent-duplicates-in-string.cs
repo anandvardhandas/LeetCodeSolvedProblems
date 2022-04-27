@@ -1,28 +1,22 @@
 public class Solution {
     public string RemoveDuplicates(string s) {
         Stack<char> st = new Stack<char>();
-        
+        StringBuilder sb = new StringBuilder();
         foreach(char c in s){
             if(st.Count > 0 && st.Peek() == c){
-               while(st.Count > 0 && st.Peek() == c){
-                    st.Pop();
-               } 
+                st.Pop();
             }
             else{
                 st.Push(c);
             }
         }
         
-        StringBuilder sb = new StringBuilder();
         while(st.Count > 0){
-            sb.Append(st.Pop());
+            sb.Append(st.Pop().ToString());
         }
         
-        string result = sb.ToString();
-        
-        char[] res = result.ToCharArray();
-        Array.Reverse(res);
-        
-        return new string(res);
+        char[] result = sb.ToString().ToCharArray();
+        Array.Reverse(result);
+        return new string(result);
     }
 }
