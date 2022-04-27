@@ -41,12 +41,12 @@ public class Solution {
         }
         
         int maxheight = 0;
-        int secondmaxheight = 0;
+        int secondmaxheight = -1;
         int totaldiam = 0;
         IList<Node> children = root.children;
         foreach(Node child in children){
             int height = 1 + Helper(child);
-            if(height > maxheight){
+            if(height >= maxheight){
                 secondmaxheight = maxheight;
                 maxheight = height;
             }
@@ -56,8 +56,10 @@ public class Solution {
             
         }
         
-       
-        totaldiam = maxheight + secondmaxheight;
+        if(secondmaxheight == -1)
+            totaldiam = maxheight;
+        else
+            totaldiam = maxheight + secondmaxheight;
         
         maxdiameter = Math.Max(maxdiameter,totaldiam);
         return maxheight;
