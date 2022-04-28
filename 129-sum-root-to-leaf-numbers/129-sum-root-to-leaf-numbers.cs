@@ -15,23 +15,23 @@ public class Solution {
     private int total;
     public int SumNumbers(TreeNode root) {
         total = 0;
-        Helper(root,new List<char>());
+        Helper(root,0);
         return total;
     }
     
-    private void Helper(TreeNode root, List<char> temp){
+    private void Helper(TreeNode root, int temp){
         if(root == null)
             return;
         
-        temp.Add(char.Parse(root.val.ToString()));
+        temp = temp * 10 + root.val;
         
         Helper(root.left, temp);
         Helper(root.right, temp);
         
         if(root.left == null && root.right == null){
-            total += int.Parse(new string(temp.ToArray()));
+            total += temp;
         }
         
-        temp.RemoveAt(temp.Count-1);
+        temp = temp/10;
     }
 }
