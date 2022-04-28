@@ -1,21 +1,25 @@
 public class Solution {
-    private Dictionary<int,List<int>> map;
+    private int[] map;
+    private Random random;
     public Solution(int[] nums) {
-        map = new Dictionary<int,List<int>>();
-        for(int i = 0; i < nums.Length; i++){
-            if(map.ContainsKey(nums[i])){
-                map[nums[i]].Add(i);
-            }
-            else{
-                map.Add(nums[i], new List<int>() { i });
-            }
-        }
+        map = nums;
+        random = new Random();
     }
     
     public int Pick(int target) {
-        List<int> list = map[target];
-        int rand = new Random().Next(0, list.Count);
-        return list[rand];
+        int count = 0;
+        int result = 0;
+        for(int i = 0; i < map.Length; i++){
+            if(map[i] == target){
+                count++;
+                int rand = random.Next(1, count+1);
+                if(rand == 1){
+                    result = i;
+                }
+            }
+        }
+        
+        return result;
     }
 }
 
