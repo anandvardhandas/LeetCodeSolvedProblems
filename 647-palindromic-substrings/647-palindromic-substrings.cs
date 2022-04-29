@@ -13,7 +13,7 @@ public class Solution {
         
         int total = 0;
         for(int i = len-1; i >= 0; i--){
-            for(int j = i; j < len; j++){
+            for(int j = len-1; j >= i; j--){
                 if(j-i <= 1){
                     if(j == i){
                         dp[i,j] = 1;
