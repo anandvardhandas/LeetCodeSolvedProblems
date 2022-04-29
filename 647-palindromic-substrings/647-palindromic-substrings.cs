@@ -1,37 +1,29 @@
 public class Solution {
     public int CountSubstrings(string s) {
         
-        int total = Calculate(s);
-        return total;
+        int total = 0;
+        int len = s.Length;
+        for(int i = 0; i < len; i++){
+            total += Calculate(s, i, i);
+            total += Calculate(s, i, i+1);
+        }
         
+        return total;
     }
     
-    private int Calculate(string s){
+    private int Calculate(string s, int low, int hi){
         int len = s.Length;
         
-        int[,] dp = new int[len+1,len+1];
-        
         int total = 0;
-        for(int i = len-1; i >= 0; i--){
-            for(int j = len-1; j >= i; j--){
-                if(j-i <= 1){
-                    if(j == i){
-                        dp[i,j] = 1;
-                        total++;
-                    }
-                    else if(s[j] == s[i]){
-                        dp[i,j] = 1;
-                        total++;
-                    }
-                }
-                else{
-                    if(s[j] == s[i]){
-                        if(dp[i+1,j-1] == 1){
-                            dp[i,j] = 1;
-                            total++;
-                        }
-                    }
-                }
+        
+        while(low >= 0 && hi < len){
+            if(s[low] == s[hi]){
+                total++;
+                low--;
+                hi++;
+            }
+            else{
+                break;
             }
         }
         
