@@ -12,16 +12,22 @@
  * }
  */
 public class BSTIterator {
-    Stack<TreeNode> st;
-    TreeNode curr;
+    
+    private Stack<TreeNode> st;
+    private TreeNode curr;
     public BSTIterator(TreeNode root) {
         st = new Stack<TreeNode>();
         curr = root;
+        
+        while(curr != null){
+            st.Push(curr);
+            curr = curr.left;
+        }
     }
     
     public int Next() {
         int result = -1;
-        while(st.Count > 0 || curr != null){
+        while(curr != null || st.Count > 0){
             while(curr != null){
                 st.Push(curr);
                 curr = curr.left;
@@ -30,15 +36,16 @@ public class BSTIterator {
             curr = st.Pop();
             result = curr.val;
             curr = curr.right;
-            return result;
+            break;
         }
         
         return result;
     }
     
     public bool HasNext() {
-        if(curr != null || st.Count > 0)
+        if(curr != null || st.Count > 0){
             return true;
+        }
         
         return false;
     }
