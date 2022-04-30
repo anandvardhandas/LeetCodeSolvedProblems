@@ -39,7 +39,7 @@ public class Solution {
             }
             else{
                 Dictionary<string,bool> visited = new Dictionary<string,bool>();
-                double res = Helper(map, from, to, from, visited);
+                double res = Helper(map, to, from, visited);
                 if(res == 0)
                     result.Add((double)-1);
                 else
@@ -50,7 +50,7 @@ public class Solution {
         return result.ToArray();
     }
     
-    private double Helper(Dictionary<string,List<Node>> map, string from, string to, string name, Dictionary<string,bool> visited){
+    private double Helper(Dictionary<string,List<Node>> map,string to, string name, Dictionary<string,bool> visited){
         
         if(name == to){
             return 1.0;
@@ -71,7 +71,7 @@ public class Solution {
         List<Node> nodes = map[name];
         double res = 0;
         foreach(Node node in nodes){
-            res = node.weight * Helper(map, from, to, node.name, visited);
+            res = node.weight * Helper(map, to, node.name, visited);
             if(res != 0){
                 return res;
             }
@@ -88,6 +88,4 @@ public class Node{
         this.name = _name;
         this.weight = _weight;
     }
-    
-    
 }
