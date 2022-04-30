@@ -27,7 +27,6 @@ public class Solution {
     }
     
     private void Helper(int[,] grid, int m, int n, int row, int col){
-        //Console.WriteLine($"row {row} col {col}");
         // go right
         int i = row, j = col+1;
         while(j < n){
