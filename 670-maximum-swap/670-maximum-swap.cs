@@ -6,9 +6,7 @@ public class Solution {
         string numstr = num.ToString();
         char[] nums = numstr.ToCharArray();
         Array.Sort(nums, (x,y) => y.CompareTo(x));
-        foreach(char c in nums){
-            //Console.WriteLine(c);
-        }
+        
         int i = 0;
         while(i<nums.Length){
             if(nums[i] == numstr[i]){
@@ -18,7 +16,6 @@ public class Solution {
                 break;
             }
         }
-       // Console.WriteLine(i);
         char[] result = numstr.ToCharArray();
         if(i < nums.Length){
             //find the last positionn of nums[i] in numstr
@@ -31,7 +28,6 @@ public class Solution {
             }
 
             //swap i with swapindex in numstr
-            
             char temp = result[i];
             result[i] = result[swapindex];
             result[swapindex] = temp;
