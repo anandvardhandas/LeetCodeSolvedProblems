@@ -15,6 +15,10 @@ class Solution {
         int min = int.MaxValue;
         for(int i = 0; i < row; i++){
             int low = 0, hi = col-1;
+            if(min != int.MaxValue){
+                hi = min-1;
+            }
+            
             int ans = int.MaxValue;
             while(low <= hi){
                 int mid = low + (hi-low)/2;
