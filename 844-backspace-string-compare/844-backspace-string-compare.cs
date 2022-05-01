@@ -1,35 +1,35 @@
 public class Solution {
     public bool BackspaceCompare(string s, string t) {
-        Stack<char> st1 = new Stack<char>();
-        Stack<char> st2 = new Stack<char>();
+        List<char> list1 = new List<char>();
+        List<char> list2 = new List<char>();
         
         foreach(char c in s){
             if(c == '#'){
-                if(st1.Count > 0){
-                    st1.Pop();
+                if(list1.Count > 0){
+                    list1.RemoveAt(list1.Count-1);
                 }
             }
             else{
-                st1.Push(c);
+                list1.Add(c);
             }
         }
         
         foreach(char c in t){
             if(c == '#'){
-                if(st2.Count > 0){
-                    st2.Pop();
+                if(list2.Count > 0){
+                    list2.RemoveAt(list2.Count-1);
                 }
             }
             else{
-                st2.Push(c);
+                list2.Add(c);
             }
         }
         
-        while(st1.Count > 0 && st2.Count > 0 && st1.Peek() == st2.Peek()){
-            st1.Pop();
-            st2.Pop();
+        int i = list1.Count-1, j = list2.Count-1;
+        while(i >= 0 && j >= 0 && list1[i] == list2[j]){
+           i--;
+            j--;
         }
-        
-        return st1.Count == 0 && st2.Count == 0;
+        return i == -1 && j == -1;
     }
 }
