@@ -1,35 +1,55 @@
 public class Solution {
     public bool BackspaceCompare(string s, string t) {
-        List<char> list1 = new List<char>();
-        List<char> list2 = new List<char>();
+        int i = s.Length-1, j = t.Length -1;
         
-        foreach(char c in s){
-            if(c == '#'){
-                if(list1.Count > 0){
-                    list1.RemoveAt(list1.Count-1);
+        int back1 = 0, back2 = 0; //backspace char count
+        
+        while(i>=0 || j>= 0){
+            while(i>=0){
+                if(s[i] == '#'){
+                    back1++;
+                    i--;
+                }
+                else{
+                    if(back1 > 0){
+                        back1--;
+                        i--;
+                    }
+                    else{
+                        break;
+                    }
                 }
             }
-            else{
-                list1.Add(c);
-            }
-        }
-        
-        foreach(char c in t){
-            if(c == '#'){
-                if(list2.Count > 0){
-                    list2.RemoveAt(list2.Count-1);
+            
+            while(j>=0){
+                if(t[j] == '#'){
+                    back2++;
+                    j--;
+                }
+                else{
+                    if(back2 > 0){
+                        back2--;
+                        j--;
+                    }
+                    else{
+                        break;
+                    }
                 }
             }
-            else{
-                list2.Add(c);
+            //Console.WriteLine(i);
+            //Console.WriteLine(j);
+            if(i >= 0 && j >= 0 && s[i] != t[j]){
+                return false;
             }
-        }
-        
-        int i = list1.Count-1, j = list2.Count-1;
-        while(i >= 0 && j >= 0 && list1[i] == list2[j]){
-           i--;
+            
+            if((i<0 && j>= 0) || (j < 0 && i >=0)){
+                return false;
+            }
+            
+            i--;
             j--;
         }
-        return i == -1 && j == -1;
+        
+        return true;
     }
 }
