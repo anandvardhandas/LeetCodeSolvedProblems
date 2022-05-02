@@ -1,93 +1,67 @@
 public class Solution {
-    public  string MinWindow(string s, string t)
-    {
-        string alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-
-        Dictionary<char, int> map2 = new Dictionary<char, int>();
-        Dictionary<char, int> map1 = new Dictionary<char, int>();
-
-        FillMap(map2, alpha);
-        FillMap(map1, alpha);
-
-        foreach (char c in t)
-        {
-            map2[c]++;
-        }
-
-        int count = 0;
-
-        int len = s.Length;
-        int size = t.Length;
-
-        int l = 0, r = 0;
-
+    public string MinWindow(string s, string t) {
+        int len1  = t.Length, len2 = s.Length;
+        if(len1 > len2)
+            return "";
         int min = int.MaxValue;
         string res = "";
-        while (r < len)
-        {
-            //expand right to get all charcs of t
-            //"ADOBECODEBANC", "ABC"
-            while (r < len)
-            {
-                char ch = s[r];
-                if (map2[ch] > 0)
-                {
-                    if (map1[ch] < map2[ch])
-                    {
-                        count++;
-                        if (count == size)
-                        {
-                            map1[ch]++;
-                            r++;
-                            break;
-                        }
-                    }
-
-                    map1[ch]++;
-                }
-
-                r++;
-            }
-
-            if (count == size && r - l < min)
-            {
-                min = r - l;
-                res = s.Substring(l, min);
-            }
-            //"ADOBECODEBANC", "ABC"
-            //shrink left till it is valid
-            while (l < len)
-            {
-                char ch = s[l];
-                if (map2[ch] > 0)
-                {
-                    if (map1[ch] <= map2[ch])
-                    {
-                        count--;
-                        map1[ch]--;
-                        l++;
-                        break;
-                    }
-
-                    map1[ch]--;
-                }
-
-                l++;
-                if (count == size && r - l < min)
-                {
-                    min = r - l;
-                    res = s.Substring(l, min);
-                }
-            }
-
+        Dictionary<char,int> map1 = new Dictionary<char,int>();
+        Dictionary<char,int> map2 = new Dictionary<char,int>();
+        
+        FillMap(map1);
+        FillMap(map2);
+        
+        foreach(char c in t){
+            map1[c]++;
         }
-
+        
+        int count = 0;
+        
+        
+        int low = 0, hi = 0;
+        while(hi < len2){
+            while(hi < len2 && count < len1){
+                char c = s[hi];
+                if(map1[c] > 0){
+                    map2[c]++;
+                    if(map2[c] <= map1[c]){
+                        count++;
+                    }
+                }
+                
+                hi++;
+            }
+            
+            if(count == len1 && hi-low < min){
+                min = hi-low;
+                res = s.Substring(low, hi-low);
+            }
+            
+            while(count == len1){
+                char c = s[low];
+                if(map1[c] > 0){
+                    if(map2[c] <= map1[c]){
+                        count--;
+                        
+                        if(hi-low < min){
+                           min = hi-low;
+                           res = s.Substring(low, hi-low);
+                       }
+                    }
+                    
+                    map2[c]--;
+                }
+                
+                low++;
+            }
+        }
+        
         return res;
     }
     
-    private void FillMap(Dictionary<char,int> map, string alpha){
-        foreach(char c in alpha){
+    private void FillMap(Dictionary<char,int> map){
+        string str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        foreach(char c in str){
             map.Add(c,0);
         }
     }
