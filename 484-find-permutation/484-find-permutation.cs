@@ -29,20 +29,20 @@ public class Solution {
         }
         
         if(dcount > 0){
-                    num = num + dcount + 1;
-                    int temp = num;
-                    result[index++] = temp;
-                    temp--;
-                    while(dcount > 0){
-                        result[index++] = temp;
-                        temp--;
-                        dcount--;
-                    }
-                }
-                else{
-                    num++;
-                    result[index++] = num;
-                }
+            num = num + dcount + 1;
+            int temp = num;
+            result[index++] = temp;
+            temp--;
+            while(dcount > 0){
+                result[index++] = temp;
+                temp--;
+                dcount--;
+            }
+        }
+        else{
+            num++;
+            result[index++] = num;
+        }
         
         
        
