@@ -1,6 +1,5 @@
 public class Solution {
     public IList<string> MostVisitedPattern(string[] username, int[] timestamp, string[] website) {
-        IList<string> result = new List<string>();
         int len = username.Length;
         User[] users = new User[len];
         for(int i = 0; i < len; i++){
@@ -21,7 +20,6 @@ public class Solution {
         
         Dictionary<string, int> seqFreqMap = new Dictionary<string, int>();
         foreach(var item in userWebsites){
-            //Console.WriteLine($"{item.Key} {string.Join(",", item.Value)}");
             List<string> list = item.Value;
             
             //generate combination of 3 websites
@@ -50,20 +48,16 @@ public class Solution {
         int maxfreq = -1;
         string res = "";
         foreach(var item in seqFreqMap){
-            Console.WriteLine($"string: {string.Join(",", item.Key)} and freq {item.Value}");
             if(item.Value > maxfreq){
                 maxfreq = item.Value;
                 res = item.Key;
             }
             else if(item.Value == maxfreq && item.Key.CompareTo(res) < 0){
-                //string max = string.Join(",",result.ToList());
-                //string curr = string.Join(",", item.Key);
-                //Console.WriteLine($"max: {max} curr: {curr}");
                 res = item.Key;
             }
         }
         
-        return res.Split(",").ToList();;
+        return res.Split(",").ToList();
     }
 }
 
