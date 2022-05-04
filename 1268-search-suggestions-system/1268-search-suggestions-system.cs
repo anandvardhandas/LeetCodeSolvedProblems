@@ -1,21 +1,21 @@
 public class Solution {
     public IList<IList<string>> SuggestedProducts(string[] products, string searchWord) {
-        Node root = BuildTrie(products);
         IList<IList<string>> result = new List<IList<string>>();
+        //build trie
+        Node root = BuildTrie(products);
         
+        //search
         for(int i = 0; i < searchWord.Length; i++){
-            List<string> res = FindWordsWithPrefix(root, searchWord.Substring(0,i+1));
-            result.Add(res);
+            result.Add(SearchWord(root, searchWord.Substring(0,i+1)));
         }
         
         return result;
     }
     
-    private List<string> FindWordsWithPrefix(Node root, string prefix){
-        //Console.WriteLine($"started searching for {prefix}");
+    private List<string> SearchWord(Node root, string word){
         List<string> result = new List<string>();
         Node curr = root;
-        foreach(char c in prefix){
+        foreach(char c in word){
             if(curr.children[c-'a'] == null){
                 return result;
             }
@@ -24,32 +24,31 @@ public class Solution {
             }
         }
         
-        DFS(curr, result, prefix);
+        DFS(curr, word, result);
         return result;
     }
     
-    private void DFS(Node root, List<string> result, string prefix){
-        Node curr = root;
-        if(result.Count >= 3){
+    private void DFS(Node root, string word, List<string> result){
+        if(result.Count == 3){
             return;
         }
         
-        if(curr.isword){
-            result.Add(prefix);
+        if(root.isword){
+            result.Add(word);
         }
         
         for(char c = 'a'; c <= 'z'; c++){
-            if(curr.children[c-'a'] != null){
-                DFS(curr.children[c-'a'], result, prefix+c);
+            if(root.children[c-'a'] != null){
+                DFS(root.children[c-'a'], word+c, result);
             }
         }
     }
     
     private Node BuildTrie(string[] products){
         Node root = new Node();
-       
+        
         foreach(string product in products){
-             Node curr = root;
+            Node curr = root;
             foreach(char c in product){
                 if(curr.children[c-'a'] == null){
                     curr.children[c-'a'] = new Node();
@@ -71,7 +70,6 @@ public class Node{
     public bool isword;
     public Node[] children;
     public Node(){
-        isword = false;
         children = new Node[26];
     }
 }
