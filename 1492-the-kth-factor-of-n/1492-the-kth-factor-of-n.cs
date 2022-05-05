@@ -1,33 +1,21 @@
 public class Solution {
     public int KthFactor(int n, int k) {
-        int sqrt = (int)Math.Sqrt(n);
-        
-        PriorityQueue<int,int> pq = new PriorityQueue<int,int>(k+1, Comparer<int>.Create((x,y) => {
-            return y.CompareTo(x);
-        }));
-        
-        int count = 0;
-        for(int i = 1; i <= sqrt; i++){
-            if(n%i == 0){
-                count += 1;
-                pq.Enqueue(i,i);
-                if(pq.Count > k){
-                    pq.Dequeue();
-                }
-                
-                if(i != n/i){
-                    count++;
-                    pq.Enqueue(n/i,n/i);
-                    if(pq.Count > k){
-                        pq.Dequeue();
-                    }
-                }
-            }
-        }
-        
-        if(count < k)
+         for(int i = 1; i < Math.Sqrt(n); ++i) 
+                if(n % i== 0 && --k == 0) 
+                    return i;                       
+            for(int i = (int) Math.Sqrt(n); i >= 1; --i) 
+                if(n % (n/i) == 0 && --k == 0) 
+                    return n/i;          
             return -1;
         
-        return pq.Dequeue();
+        /*
+            for(int i = 1; i < Math.sqrt(n); ++i) 
+                if(n % i== 0 && --k == 0) 
+                    return i;                       
+            for(int i = (int) Math.sqrt(n); i >= 1; --i) 
+                if(n % (n/i) == 0 && --k == 0) 
+                    return n/i;          
+            return -1;
+        */
     }
 }
