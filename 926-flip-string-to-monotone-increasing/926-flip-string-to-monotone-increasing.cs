@@ -1,13 +1,12 @@
 public class Solution {
     public int MinFlipsMonoIncr(string s) {
         int[,] dp = new int[s.Length,2];
-        for(int i = 0 ; i < s.Length; i++){
-            for(int j = 0; j <= 1; j++){
-                dp[i,j] = -1;
-            }
+        for(int i = 0; i < s.Length; i++){
+            dp[i,0] = -1;
+            dp[i,1] = -1;
         }
         
-        return Helper(s, 0, 0, dp);
+        return Helper(s,0,0, dp);
     }
     
     private int Helper(string s, int index, int prev, int[,] dp){
@@ -20,7 +19,6 @@ public class Solution {
         }
         
         int result1 = int.MaxValue, result2 = int.MaxValue, result3 = int.MaxValue;
-        
         if(prev == 0){
             result1 = Helper(s, index+1, 0, dp);
             if(s[index] == '1'){
@@ -31,6 +29,7 @@ public class Solution {
             if(s[index] == '0'){
                 result2 += 1;
             }
+            
         }
         else{
             result3 = Helper(s, index+1, 1, dp);
@@ -40,7 +39,6 @@ public class Solution {
         }
         
         int result = Math.Min(result1, Math.Min(result2, result3));
-        
         dp[index,prev] = result;
         return result;
     }
