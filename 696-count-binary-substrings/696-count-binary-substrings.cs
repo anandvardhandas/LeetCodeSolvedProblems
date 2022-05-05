@@ -3,7 +3,9 @@ public class Solution {
         int len = s.Length;
         int[] groups = new int[len];
         groups[0] = 1;
+        
         int index = 0;
+        
         for(int i = 1; i < len; i++){
             if(s[i] == s[i-1]){
                 groups[index]++;
@@ -15,8 +17,9 @@ public class Solution {
         }
         
         int result = 0;
-        for(int i = 1; i < index+1; i++){
-            result = result + Math.Min(groups[i], groups[i-1]);
+        
+        for(int i = 1; i < len; i++){
+            result += Math.Min(groups[i], groups[i-1]);
         }
         
         return result;
