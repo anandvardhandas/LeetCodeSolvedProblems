@@ -1,20 +1,15 @@
 public class MyStack {
     Queue<int> que1;
-    Queue<int> que2;
     public MyStack() {
         que1 = new Queue<int>();
-        que2 = new Queue<int>();
     }
     
     public void Push(int x) {
-        while(que1.Count > 0){
-            que2.Enqueue(que1.Dequeue());
-        }
-        
         que1.Enqueue(x);
-        
-        while(que2.Count > 0){
-            que1.Enqueue(que2.Dequeue());
+        int count = que1.Count;
+        while(count > 1){
+            que1.Enqueue(que1.Dequeue());
+            count--;
         }
     }
     
