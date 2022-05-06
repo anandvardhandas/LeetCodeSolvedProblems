@@ -4,23 +4,30 @@ public class Solution {
         int[] result = new int[len];
         result[len-1] = 0;
         
-        Stack<int> st = new Stack<int>();
-        st.Push(len-1);
+        int hottest = temperatures[len-1];
         
-        for(int i = len-2; i >= 0; i--){
-            while(st.Count > 0 && temperatures[i] >= temperatures[st.Peek()]){
-                st.Pop();
-            }
-            
-            if(st.Count == 0){
+        
+        int i = len-2;
+        while(i >= 0){
+            if(temperatures[i] >= hottest){
+                hottest = temperatures[i];
                 result[i] = 0;
+                i--;
+            }
+            else if(temperatures[i] < temperatures[i+1]){
+                result[i] = 1;
+                i--;
             }
             else{
-                int diff = st.Peek()-i;
-                result[i] = diff;
+                int j = i+1;
+                while(temperatures[i] >= temperatures[j]){
+                    j = j+result[j];
+                }
+                
+                result[i] = j-i;
+                
+                i--;
             }
-            
-            st.Push(i);
         }
         
         return result;
