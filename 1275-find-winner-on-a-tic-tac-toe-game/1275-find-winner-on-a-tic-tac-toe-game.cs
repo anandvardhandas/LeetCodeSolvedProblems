@@ -1,43 +1,53 @@
 public class Solution {
     public string Tictactoe(int[][] moves) {
-        int n = 3;
+        int size = 3;
+        int len = moves.Length;
         
-        int[] rows = new int[3];
-        int[] cols = new int[3];
-        int diag = 0, adiag = 0;
-        int player = 1;
-        for(int i = 0; i < moves.Length; i++){
-            int row = moves[i][0], col = moves[i][1];
-            rows[row] += player;
-            cols[col] += player;
+        int[] row = new int[size];
+        int[] col = new int[size];
+        int diag = 0, antidiag = 0;
+        
+        int move = 1;
+        for(int i = 0; i < len; i++){
+            int r = moves[i][0], c = moves[i][1];
             
-            if(row == col){
-                diag += player;
+            row[r] += move;
+            col[c] += move;
+            
+            if(r == c){
+                //diag
+                diag += move;
             }
             
-            if(row+col == n-1){
+            if(r+c == size-1){
                 //anti diag
-                adiag += player;
+                antidiag += move;
             }
             
-            if(i >= 4){
-                //check winning
-                if(Math.Abs(rows[row]) == n || Math.Abs(cols[col]) == n || Math.Abs(diag) == n || Math.Abs(adiag) == n){
-                    if(player == 1)
-                        return "A";
-                    else
-                        return "B";
+            
+            if(Math.Abs(row[r]) == size || Math.Abs(col[c]) == size || Math.Abs(diag) == size || Math.Abs(antidiag) == size){
+                if(move == 1){
+                    return "A";
+                }
+                else{
+                    return "B";
                 }
             }
             
-            player = player * -1; //switch player
+            if(move == 1){
+                move = -1;
+            }
+            else{
+                move = 1;
+            }
         }
         
-        if(moves.Length < 9)
-            return "Pending";
         
-        return "Draw";
+        if(len == size*size){
+            return "Draw";
+        }
+        else{
+            return "Pending";
+        }
     }
-    
-    
 }
