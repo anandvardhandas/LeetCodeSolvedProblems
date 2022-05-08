@@ -1,23 +1,29 @@
 public class Solution {
     public int NumPairsDivisibleBy60(int[] time) {
+        int len = time.Length;
         Dictionary<int,int> map = new Dictionary<int,int>();
-        map.Add(60,0);
+        map.Add(60, 0);
         int total = 0;
-        foreach(int t in time){
-            int num = t%60;
-            if(map.ContainsKey(60-num)){
-                total += map[60-num];
-            }
+        
+        for(int i = 0; i < len; i++){
+            int num = time[i]%60;
+             
+            int target = 60-num;
             
-            if(num != 0){
-                if(!map.ContainsKey(num)){
-                    map.Add(num, 1);
+            if(target != 60){
+                if(map.ContainsKey(target)){
+                    total += map[target];
+                }
+
+                if(map.ContainsKey(num)){
+                    map[num]++;
                 }
                 else{
-                    map[num]++;
+                    map.Add(num,1);
                 }
             }
             else{
+                total += map[60];
                 map[60]++;
             }
             
