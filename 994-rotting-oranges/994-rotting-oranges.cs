@@ -18,6 +18,7 @@ public class Solution {
         
         if(fresh == 0)
             return 0;
+        
         int mins = 0;
         
         while(que.Count > 0){
@@ -33,15 +34,15 @@ public class Solution {
                     
                     grid[row][col] = 2;
                     fresh--;
-                    if(fresh == 0){
-                        return mins+1;
-                    }
-                    
                     que.Enqueue(new Node(row,col));
                 }
             }
             
             mins++;
+            
+            if(fresh == 0){
+                return mins;
+            }
             
         }
         
