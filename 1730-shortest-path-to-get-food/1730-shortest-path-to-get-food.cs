@@ -19,8 +19,6 @@ public class Solution {
             for(int i = 1; i <= size; i++){
                 Node node = que.Dequeue();
                 
-                
-                
                 foreach(int[] dir in Directions){
                     int row = dir[0]+node.x, col = dir[1]+node.y;
                     
