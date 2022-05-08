@@ -27,13 +27,13 @@ public class Solution {
         int[] left = Helper(root.left);
         int[] right = Helper(root.right);
         
-        int totalTrees = left[0]+right[0] + 1;
+        int totalNodes = left[0]+right[0] + 1;
         int totalVal = left[1]+right[1] + root.val;
         
-        if(totalVal/totalTrees == root.val){
+        if(totalVal/totalNodes == root.val){
             result++;
         }
         
-        return new int[] { totalTrees, totalVal };
+        return new int[] { totalNodes, totalVal };
     }
 }
