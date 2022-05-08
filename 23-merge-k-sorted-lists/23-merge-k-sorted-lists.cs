@@ -11,30 +11,27 @@
  */
 public class Solution {
     public ListNode MergeKLists(ListNode[] lists) {
-        if(lists == null || lists.Length == 0)
-            return null;
-        
-        int len = lists.Length;
+        ListNode root = new ListNode(0);
+        ListNode curr = root;
         PriorityQueue<ListNode,ListNode> pq = 
-            new PriorityQueue<ListNode,ListNode>(len, Comparer<ListNode>.Create((x,y) => x.val.CompareTo(y.val)));
+            new PriorityQueue<ListNode,ListNode>(Comparer<ListNode>.Create((x,y) => x.val.CompareTo(y.val)));
         
-        for(int i = 0; i < len; i++){
-            if(lists[i] != null)
-                pq.Enqueue(lists[i],lists[i]);
+        foreach(ListNode list in lists){
+            if(list != null)
+                pq.Enqueue(list,list);
         }
-        
-        ListNode dummy = new ListNode(0);
-        ListNode curr = dummy;
         
         while(pq.Count > 0){
-            ListNode popped = pq.Dequeue();
-            curr.next = new ListNode(popped.val);
+            ListNode node = pq.Dequeue();
+            curr.next = new ListNode(node.val);
             curr = curr.next;
-            if(popped.next != null)
-                pq.Enqueue(popped.next,popped.next);
+            
+            node = node.next;
+            if(node != null){
+                pq.Enqueue(node,node);
+            }
         }
         
-        return dummy.next;
+        return root.next;
     }
 }
-
