@@ -3,11 +3,13 @@ public class Solution {
         char[] arr = new char[] { 'a', 'e', 'i', 'o', 'u' };
         List<string> result = new List<string>();
         int[,] dp = new int[n,5];
+        
         for(int i = 0; i < n; i++){
             for(int j = 0; j < 5; j++){
                 dp[i,j] = -1;
             }
         }
+        
         return Helper(n, arr, 0, 0, dp);
     }
     
