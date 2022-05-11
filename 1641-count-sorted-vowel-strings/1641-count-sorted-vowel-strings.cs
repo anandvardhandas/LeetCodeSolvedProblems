@@ -2,24 +2,34 @@ public class Solution {
     public int CountVowelStrings(int n) {
         char[] arr = new char[] { 'a', 'e', 'i', 'o', 'u' };
         List<string> result = new List<string>();
-        Helper(n, arr, 0, new List<char>(), result);
-        return result.Count;
+        int[,] dp = new int[n,5];
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < 5; j++){
+                dp[i,j] = -1;
+            }
+        }
+        return Helper(n, arr, 0, 0, dp);
     }
     
-    private void Helper(int n, char[] arr, int index, List<char> temp, List<string> result){
+    private int Helper(int n, char[] arr, int index, int len, int[,] dp){
         if(index >= arr.Length){
-            return;
+            return 0;
         }
         
-        if(temp.Count == n){
-            result.Add(new string(new List<char>(temp).ToArray()));
-            return;
+        if(len == n){
+            return 1;
         }
         
+        if(dp[len,index] != -1){
+            return dp[len,index];
+        }
+        
+        int result = 0;
         for(int i = index; i < arr.Length; i++){
-            temp.Add(arr[i]);
-            Helper(n, arr, i, temp, result);
-            temp.RemoveAt(temp.Count-1);
+            result += Helper(n, arr, i, len+1, dp);
         }
+        
+        dp[len,index] = result;
+        return result;
     }
 }
