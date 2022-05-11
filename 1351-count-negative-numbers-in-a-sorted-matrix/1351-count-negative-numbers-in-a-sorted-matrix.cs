@@ -4,23 +4,13 @@ public class Solution {
         
         int total = 0;
         
-        int negindex = n;
+        int col = n-1;
         for(int i = 0; i < m; i++){
-            int low = 0;
-            int hi = negindex-1;
-            while(low <= hi){
-                int mid = low + (hi-low)/2;
-                if(grid[i][mid] < 0){
-                    negindex = mid;
-                    hi = mid-1;
-                }
-                else{
-                    low = mid+1;
-                }
+            while(col >= 0 && grid[i][col] < 0){
+                col--;
             }
             
-            //Console.WriteLine(negindex);
-            total += n-negindex;
+            total += n-col-1;
         }
         
         return total;
