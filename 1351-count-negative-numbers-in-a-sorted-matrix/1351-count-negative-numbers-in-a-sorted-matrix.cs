@@ -4,9 +4,10 @@ public class Solution {
         
         int total = 0;
         
+        int negindex = n;
         for(int i = 0; i < m; i++){
-            int low = 0, hi = n-1;
-            int negindex = -1;
+            int low = 0;
+            int hi = negindex-1;
             while(low <= hi){
                 int mid = low + (hi-low)/2;
                 if(grid[i][mid] < 0){
@@ -18,8 +19,8 @@ public class Solution {
                 }
             }
             
-            if(negindex != -1)
-                total += n - negindex;
+            //Console.WriteLine(negindex);
+            total += n-negindex;
         }
         
         return total;
