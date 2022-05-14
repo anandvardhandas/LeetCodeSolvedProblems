@@ -1,14 +1,14 @@
 public class Solution {
     public int NetworkDelayTime(int[][] times, int n, int k) {
-        int[] dists = new int[n+1];
+        int[] costs = new int[n+1];
         for(int i = 1; i <= n; i++){
-            dists[i] = int.MaxValue;
+            costs[i] = int.MaxValue;
         }
         
         Dictionary<int,List<Node>> graph = new Dictionary<int,List<Node>>();
         for(int i = 0; i < times.Length; i++){
-            int from = times[i][0], to = times[i][1], dist = times[i][2];
-            Node node = new Node(to, dist);
+            int from = times[i][0], to = times[i][1], time = times[i][2];
+            Node node = new Node(to, time);
             if(graph.ContainsKey(from)){
                 graph[from].Add(node);
             }
@@ -21,44 +21,43 @@ public class Solution {
             }
         }
         
-        PriorityQueue<Node,Node> pq = new PriorityQueue<Node,Node>(Comparer<Node>.Create((x,y) => x.dist.CompareTo(y.dist)));
+        PriorityQueue<Node,Node> pq = new PriorityQueue<Node,Node>(Comparer<Node>.Create((x,y) => x.time.CompareTo(y.time)));
         Node firstNode = new Node(k, 0);
         pq.Enqueue(firstNode,firstNode);
         
-        dists[k] = 0;
+        costs[k] = 0;
         
         while(pq.Count > 0){
             Node node = pq.Dequeue();
             List<Node> nodes = graph[node.tower];
             foreach(Node item in nodes){
-                if(dists[node.tower] + item.dist < dists[item.tower]){
-                    dists[item.tower] = dists[node.tower] + item.dist;
+                if(costs[node.tower] + item.time < costs[item.tower]){
+                    costs[item.tower] = costs[node.tower] + item.time;
                     pq.Enqueue(item,item);
                 }
             }
         }
         
-        int max = 0;
+        int maxCost = 0;
         for(int i = 1; i <= n; i++){
-            if(dists[i] == int.MaxValue){
+            if(costs[i] == int.MaxValue){
                 return -1;
             }
-            else if(dists[i] > max){
-                max = dists[i];
+            else if(costs[i] > maxCost){
+                maxCost = costs[i];
             }
         }
         
-        return max;
-        
+        return maxCost;
     }
 }
 
 public class Node{
     public int tower;
-    public int dist;
+    public int time;
     
-    public Node(int _tower, int _dist){
+    public Node(int _tower, int _time){
         this.tower = _tower;
-        this.dist = _dist;
+        this.time = _time;
     }
 }
