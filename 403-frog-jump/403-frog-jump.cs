@@ -2,13 +2,6 @@ public class Solution {
     public bool CanCross(int[] stones) {
         int len = stones.Length;
         
-        if(stones[1] != 1)
-            return false;
-        
-        if(len == 2 && stones[1] == 1){
-            return true;
-        }
-        
         Dictionary<int,HashSet<int>> map = new Dictionary<int,HashSet<int>>();
         for(int i = 0; i < len; i++){
             map.Add(stones[i], new HashSet<int>());
