@@ -9,68 +9,33 @@ public class Solution {
             return true;
         }
         
-        Dictionary<string,bool> dp = new Dictionary<string,bool>();
-        return Helper(stones, 1, 1, dp);
-    }
-    
-    private bool Helper(int[] stones, int index, int k, Dictionary<string,bool> dp){
-        if(index == stones.Length-1){
-            return true;
+        Dictionary<int,HashSet<int>> map = new Dictionary<int,HashSet<int>>();
+        for(int i = 0; i < len; i++){
+            map.Add(stones[i], new HashSet<int>());
         }
         
-        bool res = false;
-        int nextPos = -1;
+        map[stones[0]].Add(1);
         
-        string key = $"{index}.{k}";
-        if(dp.ContainsKey(key)){
-            return dp[key];
-        }
-        
-        // k jump
-        nextPos = FindNextPos(stones, index+1, stones.Length-1, stones[index]+k);
-        if(nextPos != -1){
-            res = Helper(stones, nextPos, k, dp);
-            if(res){
-                return true;
+        for(int i = 0; i < len; i++){
+            HashSet<int> jumps = map[stones[i]];
+            foreach(int jump in jumps){
+                if(map.ContainsKey(stones[i]+jump)){
+                    if(stones[i]+jump == stones[len-1]){
+                        return true;
+                    }
+                    
+                    map[stones[i]+jump].Add(jump);
+                    
+                    if(jump-1 > 0)
+                        map[stones[i]+jump].Add(jump-1);
+                    
+                    map[stones[i]+jump].Add(jump+1);
+                }
             }
         }
         
-        //k-1 jump
-        nextPos = FindNextPos(stones, index+1, stones.Length-1, stones[index]+k-1);
-        if(nextPos != -1){
-            res = Helper(stones, nextPos, k-1, dp);
-            if(res){
-                return true;
-            }
-        }
-        
-        //k+1 jump
-        nextPos = FindNextPos(stones, index+1, stones.Length-1, stones[index]+k+1);
-        if(nextPos != -1){
-            res = Helper(stones, nextPos, k+1, dp);
-            if(res){
-                return true;
-            }
-        }
-        
-        dp.Add(key,false);
         return false;
     }
     
-    private int FindNextPos(int[] stones, int low, int hi, int pos){
-        while(low <= hi){
-            int mid = low + (hi-low)/2;
-            if(stones[mid] == pos){
-                return mid;
-            }
-            else if(stones[mid] > pos){
-                hi = mid-1;
-            }
-            else{
-                low = mid+1;
-            }
-        }
-        
-        return -1;
-    }
+    
 }
