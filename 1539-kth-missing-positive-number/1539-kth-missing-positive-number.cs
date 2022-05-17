@@ -1,19 +1,19 @@
 public class Solution {
     public int FindKthPositive(int[] arr, int k) {
-        int count = 1, numth = 0;
+        int len = arr.Length;
         
-        int i = 0;
-        while(k > 0){
-            if(i < arr.Length && count == arr[i]){
-                count++;
-                i++;
+        int low = 0, hi = len-1;
+        while(low <= hi){
+            int mid = low+(hi-low)/2;
+            int kth = arr[mid]-(mid+1);
+            if(kth < k){
+                low = mid+1;
             }
             else{
-                count++;
-                k--;
+                hi = mid-1;
             }
         }
-        
-        return count-1;
+        //Console.WriteLine(k - (arr[last]-(last+1)));
+        return k+low;
     }
 }
