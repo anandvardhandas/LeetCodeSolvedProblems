@@ -5,30 +5,20 @@ public class Solution {
             return new int[] { -1, -1 };
         }
         //finding first position
-        int low = 0, hi = len-1;
         
-        int first = -1;
-        while(low <= hi){
-            int mid = low + (hi-low)/2;
-            if(nums[mid] < target){
-                low = mid+1;
-            }
-            else if(nums[mid] > target){
-                hi = mid-1;
-            }
-            else{
-                first = mid;
-                hi = mid-1;
-            }
-        }
-        
+        int first = Helper(nums, target, true);
         if(first == -1){
             return new int[] { -1, -1 };
         }
         
         //finding the last position
-        int last = -1;
-        low = 0; hi = len-1;
+        int last = Helper(nums, target, false);
+        return new int[] { first, last };
+    }
+    
+    private int Helper(int[] nums, int target, bool first){
+        int ans = -1;
+        int low = 0, hi = nums.Length-1;
         while(low <= hi){
             int mid = low + (hi-low)/2;
             if(nums[mid] < target){
@@ -38,11 +28,14 @@ public class Solution {
                 hi = mid-1;
             }
             else{
-                last = mid;
-                low = mid+1;
+                ans = mid;
+                if(first)
+                    hi = mid-1;
+                else
+                    low = mid+1;
             }
         }
         
-        return new int[] { first, last };
+        return ans;
     }
 }
