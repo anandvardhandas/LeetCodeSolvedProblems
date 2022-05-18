@@ -1,30 +1,28 @@
 public class Solution {
     public int NumIslands(char[][] grid) {
         int m = grid.Length, n = grid[0].Length;
-        
-        int islands = 0;
-        
+        int count = 0;
         for(int i = 0; i < m; i++){
             for(int j = 0; j < n; j++){
                 if(grid[i][j] == '1'){
-                    Helper(grid, i, j);
-                    islands++;
+                    Helper(grid, m, n, i, j);
+                    count++;
                 }
             }
         }
         
-        return islands;
+        return count;
     }
     
-    private void Helper(char[][] grid, int row, int col){
-        if(row < 0 || row >= grid.Length || col < 0 || col >= grid[0].Length || grid[row][col] == '0'){
+    private void Helper(char[][] grid, int m, int n, int x, int y){
+        if(x < 0 || x >= m || y < 0 || y >= n || grid[x][y] == '0'){
             return;
         }
         
-        grid[row][col] = '0';
+        grid[x][y] = '0';
         foreach(int[] dir in Directions){
-            int nrow = dir[0]+row, ncol = dir[1]+col;
-            Helper(grid, nrow, ncol);
+            int row = dir[0]+x, col = dir[1]+y;
+            Helper(grid, m, n, row, col);
         }
     }
     
