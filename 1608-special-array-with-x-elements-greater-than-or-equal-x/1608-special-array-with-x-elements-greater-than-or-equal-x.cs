@@ -8,7 +8,6 @@ public class Solution {
         while(low <= hi){
             int mid = low + (hi-low)/2;
             int pos = Helper(nums, mid);
-            //Console.WriteLine(pos);
             int greater = len-pos-1;
             if(pos == 0){
                 greater++;
@@ -29,7 +28,6 @@ public class Solution {
     }
     //[0,0,3,4,4]
     private int Helper(int[] nums, int target){
-        //Console.WriteLine("target "+target);
         int len = nums.Length-1;
         int low = 0, hi = len-1;
         int result = 0;
@@ -44,7 +42,6 @@ public class Solution {
             }
         }
         
-        //Console.WriteLine("result "+result);
         return result;
     }
 }
