@@ -31,6 +31,7 @@ public class Solution {
         foreach(int[] dir in Directions){
             int row = dir[0]+i, col = dir[1]+j;
             bool res = Helper(grid, m, n, row, col, visited);
+            //dont stop here if false is returned, try to visit every neighbours
             if(!res){
                 result = false;
             }
