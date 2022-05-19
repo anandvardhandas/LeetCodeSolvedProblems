@@ -4,9 +4,11 @@ public class Solution {
         
         int[,] score = new int[m,n];
         
+        bool landexists = false, waterexists = false;
         for(int i = 0; i < m; i++){
             for(int j = 0; j < n; j++){
                 if(grid[i][j] == 0){
+                    waterexists = true;
                     //check top
                     int row = i-1; int col = j;
                     int mindist = 1000000;
@@ -31,6 +33,9 @@ public class Solution {
                     }
                     
                     score[i,j] = 1 + mindist;
+                }
+                else{
+                    landexists = true;
                 }
             }
         }
@@ -75,6 +80,9 @@ public class Solution {
             }
         }
         
-        return (maxdist == 1000001 || maxdist == 0) ? -1 : maxdist;
+        if(!landexists || !waterexists)
+            return -1;
+        
+        return maxdist;
     }
 }
