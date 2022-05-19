@@ -1,21 +1,22 @@
 public class Solution {
+    private int maxscore;
     public int LongestIncreasingPath(int[][] grid) {
         int m = grid.Length, n = grid[0].Length;
-        int[,] score = new int[m,n];
-        int[] maxscore = new int[] { 0 };
+        this.maxscore = 0;
         
+        int[,] score = new int[m,n];
         for(int i = 0; i < m; i++){
             for(int j = 0; j < n; j++){
                 if(score[i,j] == 0){
-                    Helper(grid, m, n, i, j, score, -1, maxscore);
+                    Helper(grid, m, n, i, j, score, -1);
                 }
             }
         }
         
-        return maxscore[0];
+       return this.maxscore;
     }
     
-    private int Helper(int[][] grid, int m, int n, int i, int j, int[,] score, int prev, int[] mscore){
+    private int Helper(int[][] grid, int m, int n, int i, int j, int[,] score, int prev){
         if(i < 0 || i >= m || j < 0 || j >= n || grid[i][j] <= prev){
             return 0;
         }
@@ -24,14 +25,15 @@ public class Solution {
             return score[i,j];
         }
         
-        int maxscore = 0;
+        int max = 0;
         foreach(int[] dir in Directions){
             int row = dir[0]+i, col = dir[1]+j;
-            maxscore = Math.Max(maxscore, Helper(grid, m, n, row, col, score, grid[i][j], mscore));
+            max = Math.Max(max, Helper(grid, m, n, row, col, score, grid[i][j]));
         }
         
-        score[i,j] = maxscore+1;
-        mscore[0] = Math.Max(mscore[0], score[i,j]);
+        score[i,j] = max+1;
+        
+        this.maxscore = Math.Max(this.maxscore, score[i,j]);
         return score[i,j];
     }
     
