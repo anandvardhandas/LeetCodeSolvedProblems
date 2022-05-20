@@ -15,11 +15,7 @@ public class Solution {
                     continue;
                 }
                 
-                if(i == m-1 && j == n-1){
-                    continue;
-                }
-                
-                dp[i,j] = dp[i,j+1]+dp[i+1,j];
+                dp[i,j] += dp[i,j+1]+dp[i+1,j];
             }
         }
         
