@@ -6,29 +6,25 @@ public class Solution {
             return 0;
         }
         
-        int[,] dp = new int[m,n];
-        return Helper(grid, m, n, 0, 0, dp);
+        int[,] dp = new int[m+1,n+1];
+        dp[m-1,n-1] = 1;
+        
+        for(int i = m-1; i >= 0; i--){
+            for(int j = n-1; j >= 0; j--){
+                if(grid[i][j] == 1){
+                    continue;
+                }
+                
+                if(i == m-1 && j == n-1){
+                    continue;
+                }
+                
+                dp[i,j] = dp[i,j+1]+dp[i+1,j];
+            }
+        }
+        
+        return dp[0,0];
     }
     
-    private int Helper(int[][] grid, int m, int n, int i, int j, int[,] dp){
-        if(i < 0 || i >= m || j < 0 || j >= n || grid[i][j] == 1){
-            return 0;
-        }
-        
-        if(i == m-1 && j == n-1){
-            return 1;
-        }
-        
-        if(dp[i,j] > 0){
-            return dp[i,j];
-        }
-        
-        int right = Helper(grid, m, n, i, j+1, dp);
-        int left = Helper(grid, m, n, i+1, j, dp);
-        
-        int total = left+right;
-        
-        dp[i,j] = total;
-        return total;
-    }
+    
 }
