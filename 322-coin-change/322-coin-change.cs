@@ -3,8 +3,6 @@ public class Solution {
         if(amount == 0)
             return 0;
         
-        Array.Sort(coins);
-        
         int[] dp = new int[amount+1];
         int result = Helper(coins, amount, dp);
         if(result == int.MaxValue)
