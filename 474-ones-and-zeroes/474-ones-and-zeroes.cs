@@ -10,10 +10,11 @@ public class Solution {
             }
         }
         
-        return Helper(strs, m, n, 0, dp);
+        Dictionary<int,int[]> map = new Dictionary<int,int[]>();
+        return Helper(strs, m, n, 0, dp, map);
     }
     
-    private int Helper(string[] strs, int m, int n, int index, int[,,] dp){
+    private int Helper(string[] strs, int m, int n, int index, int[,,] dp, Dictionary<int,int[]> map){
         if(index >= strs.Length){
             return 0;
         }
@@ -27,16 +28,24 @@ public class Solution {
         }
         
         int len1 = 0, len2 = 0;
-        int[] zerosones = FindOnesZeros(strs[index]);
+        int[] zerosones = null;
+        if(map.ContainsKey(index)){
+            zerosones = map[index];
+        }
+        else{
+            zerosones = FindOnesZeros(strs[index]);
+            map.Add(index, zerosones);
+        }
+        
         int nzeros = zerosones[0], nones = zerosones[1];
         
         //pick this index
         if(nzeros <= m && nones <= n){
-            len1 = 1 + Helper(strs, m-nzeros, n-nones, index+1, dp);
+            len1 = 1 + Helper(strs, m-nzeros, n-nones, index+1, dp, map);
         }
         
         //skip this index
-        len2 = Helper(strs, m, n, index+1, dp);
+        len2 = Helper(strs, m, n, index+1, dp, map);
         
         int maxlen = Math.Max(len1,len2);
         
