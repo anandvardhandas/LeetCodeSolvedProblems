@@ -1,16 +1,51 @@
 public class Solution {
     public bool CheckIfExist(int[] arr) {
-        Dictionary<int,int> map = new Dictionary<int,int>();
+        Array.Sort(arr);
         int len = arr.Length;
-        for(int i = 0; i < len; i++){
-            if(!map.ContainsKey(arr[i]))
-                map.Add(arr[i],i);
+        int i = 0;
+        while(i < len && arr[i] < 0){
+            i++;
         }
         
-        for(int i = 0; i < len; i++){
-            if(map.ContainsKey(2 * arr[i]) && i != map[2*arr[i]]){
-                //Console.WriteLine(i);
+        //search forward
+        int j = i;
+        if(i < len && arr[i] == 0){
+            j = i+1;
+        }
+        
+        while(j < len){
+            bool found = BinarySearch(arr, j, len-1, 2 * arr[j]);
+            if(found)
                 return true;
+            
+            j++;
+        }
+        
+        //search backward
+        
+        j = i-1;
+        while(j >= 0){
+            bool found = BinarySearch(arr, 0, j, 2 * arr[j]);
+            if(found)
+                return true;
+            
+            j--;
+        }
+        
+        return false;
+    }
+    
+    private bool BinarySearch(int[] arr, int low, int hi, int target){
+        while(low <= hi){
+            int mid = low + (hi-low)/2;
+            if(arr[mid] == target){
+                return true;
+            }
+            else if(arr[mid] < target){
+                low = mid+1;
+            }
+            else{
+                hi = mid-1;
             }
         }
         
