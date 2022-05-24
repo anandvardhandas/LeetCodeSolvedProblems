@@ -24,8 +24,7 @@ public class Solution {
             }
         }
         
-        open = 0;
-        close = 0;
+        open = 0; close = 0;
         for(int i = len-1; i >= 0; i--){
             if(s[i] == ')'){
                 close++;
@@ -33,7 +32,7 @@ public class Solution {
             else{
                 open++;
                 if(open == close){
-                    maxlen = Math.Max(maxlen, 2*open);
+                    maxlen = Math.Max(maxlen, 2*close);
                 }
                 else if(open > close){
                     open = 0;
